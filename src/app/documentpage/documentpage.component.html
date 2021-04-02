@@ -1,0 +1,36 @@
+<!-- inner Banner-->
+<div class="container home-banner">
+    <img src="assets/images/inner-banner.jpg">
+</div>
+<!--/ inner Banner end /-->
+<div class="container account internal-form">
+    <div class="row">
+        <div class="col-md-12 account-right pb-4">
+            <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="AccountSetting-tab" (click)="showSection('settings')" data-toggle="tab" href="#AccountSetting"
+                        role="tab" aria-controls="home" aria-selected="true"><div class="icons icon-setting"></div><span>Setting</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="family-tab" (click)="showSection('family')" data-toggle="tab" href="#family" role="tab"
+                        aria-controls="family" aria-selected="false"><div class="icons icon-family"></div><span>My Family</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="nominee-tab" (click)="showSection('nominee')" data-toggle="tab" href="#nominee" role="tab"
+                        aria-controls="nominee" aria-selected="false"><div class="icons icon-nominee"></div><span>My Nominee</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="valuableitems-tab" data-toggle="tab" href="#valuableitems" role="tab"
+                        aria-controls="valuableitems" aria-selected="false"><div class="icons icon-items"></div><span>Valuable Items</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="payment-tab" data-toggle="tab" href="#payment" role="tab"
+                        aria-controls="payment" aria-selected="false"><div class="icons icon-payments"></div><span>Manage Payment</span></a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,90 @@
+---Aws Console Login ----
+https://tightcap.signin.aws.amazon.com/console
+IAM id : 779997238118
+username: tightcap
+PWD: Tight1982Cap@@@
+
+--- GIT login -----
+https://tightcap.signin.aws.amazon.com/console
+tightcap-at-779997238118
+cXMRxHtpZX715n4rrev6OEg9lNnp28a6kGzwVZWMiy4=
+
+-- DB Cred --- 
+tightcapqa.cjbwk8uq1rsk.us-east-2.rds.amazonaws.com
+VPC grp : tightcapdbdev--tightcapdev
+DB : tightcapadm -- admin
+password : tightcap123_
+
+telnet tightcapdbdev.cjbwk8uq1rsk.us-east-2.rds.amazonaws.com 1433
+
+ping tightcapdbdev.cjbwk8uq1rsk.us-east-2.rds.amazonaws.com
+
+db name - tightcapdev
+
+--- AWS EC2 Server remote desk -------
+ec2-3-22-97-99.us-east-2.compute.amazonaws.com
+ec2-13-59-78-249.us-east-2.compute.amazonaws.com
+User : Administrator
+Pass : pxNswOJ-e8%f@-*&LfwmI6powunek)JH
+pxNswOJ-e8%f@-*&LfwmI6powunek)JH
+
+tightCap
+---------
+AWS link -http://tightcapui.s3-website.ap-south-1.amazonaws.com/
+db details-tightcapdb3.cmddqkv6p6r9.ap-south-1.rds.amazonaws.com
+
+ng serve --host=0.0.0.0 --disable-host-check
+
+sitekey : 6LfOA7EZAAAAABTYy0vsFsxylsPlk_w9OHrUoQKK
+secretkey: 6LfOA7EZAAAAACaSSNS2CV7Ldud93YFyseunqafi
+
+
+1-same as dropdown
+
+
+.nav-tabs .nav-item {
+    margin-bottom: -9px;
+}
+
+<li _ngcontent-sjw-c3="" class="nav-item" style="
+    width: 161px;
+    height: 67px;
+    border-bottom-width: 0px;
+"><a _ngcontent-sjw-c3="" aria-controls="home" data-toggle="tab" href="#AccountSetting" id="AccountSetting-tab" role="tab" class="nav-link active" aria-selected="true" style="
+    height: 67px;
+"><div _ngcontent-sjw-c3="" class="icons icon-setting"></div><span _ngcontent-sjw-c3="">Setting</span></a></li>
+
+
+
+
+
+1: Curve the main card
+2: acbout the ac count make 60 
+3: Add back button 
+4: textarea
+5: phone number title
+
+
+16/8/2020
+-- Footer UI Issue
+--- Login add seq 
+--- Format - YYMMDD00000
+Example -19110300001
+
+CREATE SEQUENCE REGISTER_USER_SEQ START WITH 15 INCREMENT BY 1;
+CREATE SEQUENCE INDIVIDUAL_MASTER_SEQ START WITH 25 INCREMENT BY 1;
+CREATE SEQUENCE PHONE_MASTER_SEQ START WITH 25 INCREMENT BY 1;
+CREATE SEQUENCE EMAIL_MASTER_SEQ START WITH 25 INCREMENT BY 1;
+CREATE SEQUENCE ACCOUNT_PROFILE_SEQ START WITH 25 INCREMENT BY 1;
+CREATE SEQUENCE CONFIRM_TOKEN_SEQ START WITH 25 INCREMENT BY 1;
+
+119CB208
+118CB008
+
+white : 128
+black: 108
+color: 116
+color: 108
+
+
+

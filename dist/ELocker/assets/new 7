@@ -1,0 +1,131 @@
+{
+"accountProfileId": 1,
+"parentIndividualId": 1,
+"familyMembers": [
+  {
+"personalDetail": {
+"individualId": 4,
+"title": "Mrs",
+"firstName": "Namita",
+"middleName": "",
+"lastName": "Mehar",
+"gender": "F",
+"dateOfBirth": "1996-07-17",
+"relationship": "Wife"
+},
+"addressDetail": [
+  {
+"addressId": 2,
+"individualId": 4,
+"addressLine1": "RAJ",
+"addressLine2": "SAGAR",
+"addressLine3": "",
+"addressLine4": "",
+"countryState": "",
+"country": "UK",
+"postCode": "496001"
+},
+  {
+"addressId": 1006,
+"individualId": 4,
+"addressLine1": "Kotra",
+"addressLine2": "Road",
+"addressLine3": "Raigarh",
+"addressLine4": "",
+"countryState": "",
+"country": "UK",
+"postCode": "496001"
+}
+],
+"contactDetail": [],
+},
+  {
+"personalDetail": {
+"individualId": 1004,
+"title": "Mrs",
+"firstName": "Jaishree",
+"middleName": "",
+"lastName": "Mehar",
+"gender": "F",
+"dateOfBirth": "1972-02-01",
+"relationship": "Mother"
+},
+"addressDetail": [
+  {
+"addressId": 1002,
+"individualId": 1004,
+"addressLine1": "ADARSH NAGAR",
+"addressLine2": "DURG",
+"addressLine3": "CHATTISGARH",
+"addressLine4": "",
+"countryState": "",
+"country": "UK",
+"postCode": "496002"
+},
+  {
+"addressId": 1007,
+"individualId": 1004,
+"addressLine1": "Kotra Road",
+"addressLine2": "Rajeev Nagar",
+"addressLine3": "Raigarh",
+"addressLine4": "Chattisgarh",
+"countryState": "",
+"country": "UK",
+"postCode": "496001"
+}
+],
+"contactDetail": [],
+},
+  {
+"personalDetail": {
+"individualId": 1005,
+"title": "Mr",
+"firstName": "Deepak",
+"middleName": "",
+"lastName": "Mehar",
+"gender": "M",
+"dateOfBirth": "1979-03-07",
+"relationship": "Brother"
+},
+"addressDetail": [
+  {
+"addressId": 1003,
+"individualId": 1005,
+"addressLine1": "GHGHJGH",
+"addressLine2": "",
+"addressLine3": "",
+"addressLine4": "",
+"countryState": "",
+"country": "UK",
+"postCode": "87789"
+},
+  {
+"addressId": 1004,
+"individualId": 1005,
+"addressLine1": "Kotra",
+"addressLine2": "Road",
+"addressLine3": "Raigarh",
+"addressLine4": "",
+"countryState": "",
+"country": "UK",
+"postCode": "496001"
+}
+],
+"contactDetail": [],
+},
+  {
+"personalDetail": {
+"individualId": 1019,
+"title": "Mr",
+"firstName": "Santosh",
+"middleName": "",
+"lastName": "Mehar",
+"gender": "M",
+"dateOfBirth": "1996-07-17",
+"relationship": "Uncle"
+},
+"addressDetail": [],
+"contactDetail": [],
+}
+],
+}

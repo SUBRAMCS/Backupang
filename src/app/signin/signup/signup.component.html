@@ -1,0 +1,81 @@
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <h3 class="register-heading">Register to manage your account online</h3>
+    <div class="row register-form">
+      <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+        <div class="col-md-6 float-left">
+          <mat-form-field class="mb-3 col-md-12">
+            <input matInput placeholder="First Name" formControlName="firstName" type="text" required tabindex="1">
+            <mat-error *ngIf="f.firstName.errors?.required">First Name is required</mat-error>
+            <mat-error *ngIf="f.firstName.errors?.pattern || f.firstName.errors?.onlySpecialChar || f.firstName.errors?.fullStopValidation">Only alphabets allowed</mat-error>
+            <mat-error *ngIf="f.firstName.errors?.maxlength">First Name exceeded max length (50)</mat-error>
+            <mat-error *ngIf="f.firstName.errors?.minlength">First Name too short (minimum 3 characters)</mat-error>
+          </mat-form-field>
+          <mat-form-field class="mb-3 col-md-12" style="z-index: 9999;">
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dateOfBirth" placeholder="Date of Birth" formControlName="dateOfBirth" required tabindex="1" (focusin)="toggleDobHints()" (focusout)="toggleDobHints()">
+            <mat-datepicker-toggle matSuffix [for]="dateOfBirth"></mat-datepicker-toggle>
+            <mat-datepicker #dateOfBirth></mat-datepicker>
+            <mat-error *ngIf="f.dateOfBirth.errors?.required">Date of Birth is required</mat-error>
+          </mat-form-field>
+          <mat-form-field class="mb-3 col-md-12">
+            <input matInput placeholder="Mobile Number" formControlName="phoneNo" type="text" required tabindex="5" (focusin)="toggleMobHints()" (focusout)="toggleMobHints()">
+            <mat-error *ngIf="f.phoneNo.errors?.required">Mobile number is required</mat-error>
+            <mat-error *ngIf="f.phoneNo?.errors?.pattern">Please enter a valid 10 digit mobile number.</mat-error>
+          </mat-form-field>
+          <mat-form-field class="mb-3 col-md-12">
+            <input [ngClass]="{'password': true}" matInput placeholder="Password" formControlName="password" [type]="showPwd ? 'text': 'password'" required  (focusin)="togglePwdHints()" (focusout)="togglePwdHints()" tabindex="7">
+            <i class="float-right fa " [ngClass]="{'fa-eye-slash': !showPwd, 'fa-eye': showPwd}" (click)="showPwd = !showPwd"></i>
+            <mat-error *ngIf="f.password.errors?.required">Password is required</mat-error>
+            <mat-error *ngIf="f.password.errors?.pattern">Weak password</mat-error>
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-6 float-left">
+          <mat-form-field class="mb-3 col-md-12">
+            <input matInput placeholder="Last Name" formControlName="lastName" type="text" required  tabindex="2">
+            <mat-error *ngIf="f.lastName.errors?.required">Last Name is required</mat-error>
+            <mat-error *ngIf="f.lastName.errors?.pattern || f.lastName.errors?.onlySpecialChar || f.lastName.errors?.fullStopValidation">Only alphabets allowed</mat-error>
+            <mat-error *ngIf="f.lastName.errors?.maxlength">Last Name exceeded max length (50)</mat-error>
+          </mat-form-field>
+          <mat-form-field class="mb-3 col-md-12">
+            <input matInput placeholder="Mother's Maiden Name" formControlName="motherMaidenName" type="text" required tabindex="4" (focusin)="toggleMmnHints()" (focusout)="toggleMmnHints()">
+            <mat-error *ngIf="f.motherMaidenName.errors?.required">Mother's Maiden Name is required</mat-error>
+            <mat-error *ngIf="f.motherMaidenName.errors?.pattern || f.motherMaidenName.errors?.onlySpecialChar || f.motherMaidenName.errors?.fullStopValidation">Only alphabets allowed</mat-error>
+            <mat-error *ngIf="f.motherMaidenName.errors?.minlength || f.motherMaidenName.errors?.maxlength">Mother's Maiden Name should be between 3 and 20 characters</mat-error>
+          </mat-form-field>
+          <mat-form-field class="mb-3 col-md-12">
+            <input matInput placeholder="Email ID" formControlName="email" type="email" required tabindex="6" (focusin)="toggleMailHints()" (focusout)="toggleMailHints()">
+            <mat-error *ngIf="f.email.errors?.required">Email is required</mat-error>
+            <mat-error *ngIf="f.email.errors?.email || f.email.errors?.pattern">Invalid email</mat-error>
+            <mat-error *ngIf="f.email.errors?.maxlength">Email id exceeded max length (75)</mat-error>
+            <mat-error *ngIf="f.email.errors?.forbiddenMail">User Already Exists</mat-error>
+          </mat-form-field>
+          <mat-form-field class="mb-3 col-md-12">
+            <input [ngClass]="{'password': true}" matInput placeholder="Confirm Password" formControlName="cnfrmPassword" [type]="showCPwd ? 'text': 'password'" required [errorStateMatcher]="errorMatcher"  (focusin)="togglePwdHints()" (focusout)="togglePwdHints()" tabindex="8">
+            <i class="float-right fa " [ngClass]="{'fa-eye-slash': !showCPwd, 'fa-eye': showCPwd}" (click)="showCPwd = !showCPwd"></i>
+            <mat-error *ngIf="f.cnfrmPassword.errors?.required">Password is required</mat-error>
+            <mat-error *ngIf="!registrationForm.errors?.pwdMatch">Passwords don't match</mat-error>
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-12 float-left">
+          <div class="custom-control custom-checkbox mb-3">
+            <mat-checkbox formControlName="tnc" tabindex="9"></mat-checkbox>
+            I have read, understand and agree to the <a href="#">Privacy policy</a> and <a href="#">Terms & Conditions</a>.
+          </div>
+        </div>
+        <alert class="col-md-12 float-left"></alert>
+        <div class="col-md-12 float-right">
+          <button [disabled]= "loading || registrationForm.invalid || !f.tnc.value"  class="btn btn-primary btnRegister" tabindex="10">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Register
+          </button>
+        </div>
+      </form>
+      <div class="col-md-12 text-center">
+        Already got an account? <a [routerLink]="['/signin']" >Sign in</a>
+      </div>
+    </div>
+  </div>
+
+</div>

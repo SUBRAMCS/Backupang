@@ -1,0 +1,815 @@
+<div class="fade show active" id="family" role="tabpanel" aria-labelledby="family-tab">
+	<div class="card">
+		<div class="card">
+			<div class="card-body">
+				<div class="row" style="height: 45px;">
+					<div class="col-sm-8 col-md-8 col-lg-8" style="text-align: left;">
+						<mat-form-field style="width: 433px;padding-left: 10px;">
+							<mat-label>List of Bank Accounts
+							</mat-label>
+							<mat-select disableOptionCentering panelClass="selectClass" [(ngModel)]="selUsrAccnt"
+								(ngModelChange)="panelClk($event)">
+								<mat-option *ngFor="let selectBankAcct of selectBankAcctList; let i=index;"
+									[value]="selectBankAcctList[i].valAccountId">
+									<div style="display:flex; justify-content: space-between">
+										<span>{{selectBankAcct.firstName}} {{selectBankAcct.middleName}}
+											{{selectBankAcct.lastName}}-{{selectBankAcct.bankName}} (A/C No -
+											{{selectBankAcct.accntNo}})</span>
+										<span></span>
+										<span (click)="confirmbox(selectBankAcctList[i].valAccountId)">
+											<i class="fa fa-trash" aria-hidden="true"></i>
+										</span>
+									</div>
+								</mat-option>
+								<mat-option [value]="-1">Add a New Bank Account</mat-option>
+							</mat-select>
+						</mat-form-field>
+						<!--<div class="spinner-border" role="status" *ngIf="!(selectBankAcctList!=null && selectBankAcctList.length>0)"> 
+							<span class="sr-only">Loading</span> 
+						</div> -->
+					</div>
+					<div class="col-sm-4 col-md-4 col-lg-4" style="text-align: right;padding-top: 6px;">
+						<div class="text-blue" style="width:100%;" (click)="showSection('items')">
+							<i class="fa fa-long-arrow-left fa-2x" aria-hidden="true"></i>
+						</div>
+					</div>
+				</div>
+				<div class="row" *ngIf="adStatusMsg!=null">
+					<div class="col-sm-12 col-md-12 col-lg-12" style="width:100%;text-align: left;padding-top: 0px;height: 42px;">
+						<div  #alert style="height: 27px;padding-top: 4px;margin-bottom: 0px;" class="alert alert-success alert-dismissible fade show" role="alert">
+							<button type="button" class="close" aria-label="Close" (click)="closeMessage()">
+							  <span aria-hidden="true">&times;</span>
+							</button>
+							{{adStatusMsg}}
+						  </div>
+						</div>
+				</div>
+			</div>
+		</div>
+		<div id="tab-one-panel" class="panel" *ngIf="showPanel">
+			<div class="card mb-4" style="margin-top: 20px;">
+				<div class="card-header" style="text-align: center;padding-bottom: 5px;padding-top: 5px;height: 42px;">
+					<div class="row" style="padding-top: 0px;">
+						<div class="col-sm-6 col-md-6 col-lg-6"
+							style="text-align: left;padding-top: 0px;padding-left: 20px;">
+							<div class="account-heading"><b>About The Bank</b></div>
+						</div>
+						<div class="col-sm-6 col-md-6 col-lg-6" style="text-align: right;padding-top: 2px;">
+							<button type="button" class="btn btn-secondary btn-icon-secondary btn-edit"
+								style="width: 36px;height: 28.5px;margin-left: 2px;padding-top: 1px;border-top-width: 0px;border-bottom-width: 0px;padding-bottom: 1px;margin-bottom: 0px;"
+								(click)="toggleEditState('AboutBanksForm')"
+								*ngIf="AboutBanksForm.status === 'DISABLED'">
+								<i class="fa fa-edit" aria-hidden="true"></i>
+							</button>
+							<button type="button" class="btn btn-secondary btn-icon-secondary btn-delete"
+								style="width: 36px;height: 28.5px;margin-left: 2px;padding-top: 1px;border-top-width: 0px;border-bottom-width: 0px;padding-bottom: 1px;margin-bottom: 0px;"
+								(click)="resetForm('AboutBanksForm')" data-toggle="tooltip" title="reset"
+								*ngIf="AboutBanksForm.status !== 'DISABLED'">
+								<i class="fa fa-undo" aria-hidden="true"></i>
+							</button>
+							<button [disabled]="AboutBanksForm.invalid || AddressDetailsForm.invalid" type="button"
+								(click)="onSubmit('AboutBanksForm')"
+								class="btn btn-secondary btn-icon-secondary btn-save"
+								style="width: 36px;height: 28.5px;margin-left: 2px;padding-top: 1px;border-top-width: 0px;border-bottom-width: 0px;padding-bottom: 1px;margin-bottom: 0px;"
+								*ngIf="AboutBanksForm.status !== 'DISABLED'">
+								<i class="fa fa-save" aria-hidden="true"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<form [formGroup]="AboutBanksForm" style="width: 100%">
+					<div class="card-body">
+						<div class="row" style="height: 47px;">
+							<div class="col-sm-4 col-md-4 col-lg-4" style="text-align: left;padding-right: 0px;">
+								<mat-form-field class="example-full-width" appearance="outline">
+									<mat-label>Name Of The Bank</mat-label>
+									<input type="text" placeholder="Select bank" aria-label="Number" maxlength="100"
+										matInput formControlName="bankName" [matAutocomplete]="auto" required>
+										<mat-autocomplete #auto="matAutocomplete">
+											<mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+												{{option}}
+											</mat-option>
+										</mat-autocomplete>
+								</mat-form-field>
+							</div>
+						</div>
+						<!-- add adress for bank -->
+						<div class="row" style="text-align: left;height: 40px;" *ngIf="butDisabledSelectCountry">
+							<div class="col-sm-4 col-md-4 col-lg-4" style="text-align: left;padding-right: 0px;">
+								<mat-form-field appearance="outline" style="width: 100%;padding-right: 0px;padding-left: 0px;">
+									<mat-label>Select the Address of the Bank (Country)</mat-label>
+									<mat-select panelClass="selectClass" formControlName="selectCountry" (ngModelChange)="AddeSelectCountry($event)">
+										<mat-option *ngFor="let x of CountryList; let i=index;" [value]="x.country_name">
+											{{CountryList[i].country_name}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+							<div class="col-sm-4 col-md-4 col-lg-4"
+								style="text-align: left;padding-left: 3px;padding-right: 0px;" *ngIf="ShowPostalBox">
+								<mat-form-field appearance="outline"
+									style="width: 100%;padding-right: 0px;padding-left: 0px;height: 50px;">
+									<mat-label>Postcode</mat-label>
+									<input matInput placeholder="Postcode" type="text" formControlName="postCode"
+										[(ngModel)]="postCode">
+								</mat-form-field>
+							</div>
+							<div class="col-sm-3 col-md-3 col-lg-3"
+								style="text-align: left;padding-top: 4px;padding-left: 3px;" *ngIf="ShowPostalBox">
+								<button type="button" style="font-family: Arial, Helvetica, sans-serif; font-size: small; padding: 8px;height: 34px;"
+									class="btn btn-secondary btn-icon-secondary btn-delete"
+									(click)="fetchAddressForPostCode(postCode)" [disabled]="postCode==null || postCode==''">
+									<i class="fa fa-search" aria-hidden="true"></i> Find Address
+								</button>
+							</div>
+							
+						</div>
+						<div class="row" style="text-align: left;height: 22px;" *ngIf="butDisabledSelectCountry">
+							<div class="col-sm-4 col-md-4 col-lg-4" style="text-align: left;padding-right: 0px;">
+							</div>
+							<div class="col-sm-2 col-md-2 col-lg-2"
+								style="text-align: left;padding-left: 3px;padding-right: 0px;" *ngIf="ShowPostalBox">
+								<mat-label style="color: red;font-size: smaller;" *ngIf="pfStatusMsgHide" >Invalid Postcode</mat-label>
+								
+							</div>
+							<div class="col-sm-2 col-md-2 col-lg-2"
+								style="text-align: left;padding-left: 3px;padding-right: 0px;" *ngIf="ShowPostalBox">
+								
+								<button style="cursor:pointer;color: #0000FF;padding-left: 1px;font-size: 12px;" class="btn btn-link" role="link"
+										(click)="AddAddressManually()" [disabled]="setAddrMan"><u>Enter Address Manually</u></button> 
+								
+								
+							</div>
+							<div class="col-sm-3 col-md-3 col-lg-3"
+								style="text-align: left;padding-top: 4px;padding-left: 3px;" *ngIf="ShowPostalBox">
+								
+							</div>
+							
+						</div>
+						<div class="row" style="height: 47px;" *ngIf="PostalListShow">
+							<div class="col-sm-8 col-md-8 col-lg-8"
+								style="text-align: left;height: 80px;padding-right: 0px;">
+								<mat-form-field class="mb-12 col-md-12" appearance="outline"
+									style="width: 100%;padding-left: 0px;;padding-right: 0px;">
+									<mat-label *ngIf="selectPostCodeAddressId!=-1">Please select your Address
+									</mat-label>
+									<mat-select disableOptionCentering matNativeControl
+										formControlName="selectPostCodeAddressId" [(ngModel)]="selectPostCodeAddressId"
+										panelClass="selectClass" (ngModelChange)="AddeClkPostCode($event)">
+										<mat-option [value]="-1" class="hidden" disabled>Select Address based on Post
+											Code</mat-option>
+										<mat-option *ngFor="let x of AddressPostCodeList; let i=index;"
+											[value]="AddressPostCodeList[i].line_1">{{x.line_1}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						
+						<form [formGroup]="AddressDetailsForm">
+							<div class="row" style="height: 40px;">
+								<mat-form-field class="mb-3 col-md-4" appearance="outline" style="padding-right: 0px;">
+									<mat-label>Address Line 1</mat-label>
+									<input formControlName="addressLine1" matInput placeholder="Address Line 1"
+										maxlength="50" type="text">
+								</mat-form-field>
+								<mat-form-field class="mb-3 col-md-4" appearance="outline"
+									style="padding-left: 3px;padding-right: 0px;">
+									<mat-label>Address Line 2</mat-label>
+									<input matInput formControlName="addressLine2" placeholder="Address Line 2"
+										maxlength="50" type="text">
+								</mat-form-field>
+								<mat-form-field class="mb-3 col-md-4" appearance="outline"
+									style="padding-left: 3px;padding-right: 10px;">
+									<mat-label>Address Line 3</mat-label>
+									<input matInput formControlName="addressLine3" placeholder="Address Line 3"
+										maxlength="50" type="text">
+								</mat-form-field>
+							</div>
+							<div class="row" style="height: 47px;">
+								<mat-form-field class="mb-3 col-md-4" appearance="outline" style="padding-right: 0px;">
+									<mat-label>Town / City</mat-label> <input matInput maxlength="50"
+										formControlName="addressLine4" placeholder="Town / City" type="text">
+								</mat-form-field>
+								<mat-form-field class="mb-3 col-md-4" appearance="outline" maxlength="100"
+									style="padding-left: 3px;padding-right: 0px;">
+									<mat-label>Postcode</mat-label>
+									<input matInput formControlName="postCode" placeholder="Post Code" maxlength="10"
+										type="text" >
+								</mat-form-field>
+								<mat-form-field class="mb-3 col-md-4" appearance="outline"
+									style="padding-left: 3px;padding-right: 10px;">
+									<mat-label>County / State</mat-label>
+									<input matInput formControlName="countryState" placeholder="County / Sate" type="text">
+								</mat-form-field>
+							</div>
+						</form>
+
+						<div class="row" style="height: 47px;">
+							<mat-form-field class="mb-3 col-md-4" appearance="outline" style="padding-right: 0px;">
+								<mat-label>Primary Email ID</mat-label> <input matInput formControlName="emailAddressOne" placeholder="abc@xyz.com" maxlength="70"
+									type="text">
+									<mat-error  *ngIf="AboutBanksForm.controls.emailAddressOne.errors?.pattern">Invalid Email Id</mat-error>
+									<mat-error  *ngIf="!AboutBanksForm.controls.emailAddressOne.errors?.pattern && AboutBanksForm.controls.emailAddressOne.errors?.forbiddenMail">
+										Duplicate Email Id entered</mat-error>
+							</mat-form-field>
+							<mat-form-field class="mb-3 col-md-4" appearance="outline"
+								style="padding-left: 3px;padding-right: 0px;">
+								<mat-label>Secondary Email ID</mat-label> <input matInput maxlength="70" 
+									formControlName="emailAddressTwo" placeholder="abc@xyz.com" type="text" >
+									<mat-error  *ngIf="AboutBanksForm.controls.emailAddressTwo.errors?.pattern">
+										Invalid Email Id</mat-error>
+									<!--<mat-error *ngIf="AboutBanksForm.errors?.pwdMatch">Duplicate Email Id entered</mat-error>-->
+									<mat-error  *ngIf="!AboutBanksForm.controls.emailAddressTwo.errors?.pattern && AboutBanksForm.controls.emailAddressTwo.errors?.forbiddenMail">
+										Duplicate Email Id entered</mat-error>
+
+							</mat-form-field>
+							
+						</div>
+						<div class="row" style="height: 47px;">
+							<mat-form-field class="mb-3 col-md-4" appearance="outline" style="padding-right: 0px;">
+								<input type="text" numbersOnly matInput ng2TelInput maxlength="15"
+									[ng2TelInputOptions]="{initialCountry: 'in'}" MatFormFieldControl
+									(ng2TelOutput)="getNumber($event)" formControlName="phoneNumPrim"
+									(intlTelInputObject)="telInputObject($event)" 
+									(countryChange)="onCountryChange($event,'p')"
+									style="padding-left: 54px;padding-top: 0px;" />
+									<mat-error  *ngIf="AboutBanksForm.controls.phoneNumPrim.errors?.pattern">
+										Invalid Phone Number</mat-error>
+									<mat-error  *ngIf="AboutBanksForm.controls.phoneNumPrim.errors?.forbiddenPhone">
+											Duplicate Phone Number entered</mat-error>
+							</mat-form-field>
+							<mat-form-field class="mb-3 col-md-4" appearance="outline"
+								style="padding-left: 3px;padding-right: 0px;">
+								<input type="text" numbersOnly matInput ng2TelInput maxlength="15"
+									[ng2TelInputOptions]="{initialCountry: 'in'}" MatFormFieldControl
+									(ng2TelOutput)="getNumber($event)" formControlName="phoneNumSec"
+									(intlTelInputObject)="telInputObject($event)" 
+									(countryChange)="onCountryChange($event,'s')"
+									style="padding-left: 54px;padding-top: 0px;" />
+									<mat-error  *ngIf="AboutBanksForm.controls.phoneNumSec.errors?.pattern">
+										Invalid Phone Number</mat-error>
+									<mat-error  *ngIf="AboutBanksForm.controls.phoneNumSec.errors?.forbiddenPhone">
+											Duplicate Phone Number entered</mat-error>
+									
+									
+							</mat-form-field>
+								
+						</div>
+						<div class="row" style="height: 47px;">
+							<mat-form-field class="mb-6 col-md-6" appearance="outline" style="padding-right: 10px;">
+								<mat-label>Website URL</mat-label>
+								<input matInput formControlName="websiteUrl" maxlength="100"
+									placeholder="www.bankaddress.com" type="text">
+							</mat-form-field>
+						</div>
+						<div class="row" style="padding-right: 10px;">
+							<mat-form-field class="mb-12 col-md-12">
+								<textarea placeholder="Additional Information" matInput
+									maxlength="250" #message1 maxlength="500" rows="3" formControlName="addInfoBank"
+									[(ngModel)]="addinfo" maxlength="250"></textarea>
+								<mat-hint align="end">{{message1.value.length}} / 250</mat-hint>
+							</mat-form-field>
+						</div>
+						<div *ngIf="baStatusMsg!=null" #alert style="height: 31px;padding-top: 5px;margin-bottom: 0px;padding-bottom: 5px;margin-bottom: 3px;" class="alert alert-success alert-dismissible fade show" role="alert">
+							<button type="button" class="close" aria-label="Close" (click)="closeMessage()">
+							  <span aria-hidden="true">&times;</span>
+							</button>
+							{{baStatusMsg}}
+						</div>
+					</div>
+				</form>
+			</div>
+			<!-- End of About Bank Account -->
+			<!-- Start Personal Detail -->
+
+			<div class="card mb-4" style="margin-top: 20px;">
+				<div class="card-header" style="text-align: center;padding-bottom: 5px;padding-top: 5px;height: 42px;">
+					<div class="row" style="padding-top: 0px;">
+						<div class="col-sm-6 col-md-6 col-lg-6"
+							style="text-align: left;padding-top: 0px;padding-left: 20px;">
+							<div class="account-heading"><b>Account Holder’s Detail</b></div>
+						</div>
+						<div class="col-sm-6 col-md-6 col-lg-6" style="text-align: right;padding-top: 2px;">
+							<button type="button" data-toggle="tooltip" title="edit" [disabled]="valAccountId===null"
+								class="btn btn-secondary btn-icon-secondary btn-edit"
+								style="width: 36px;height: 28.5px;margin-left: 2px;padding-top: 1px;border-top-width: 0px;border-bottom-width: 0px;padding-bottom: 1px;margin-bottom: 0px;"
+								(click)="toggleEditState('PersonalDetailsForm')"
+								*ngIf="PersonalDetailsForm.status === 'DISABLED'">
+								<i class="fa fa-edit" aria-hidden="true"></i>
+							</button>
+							<button type="button" class="btn btn-secondary btn-icon-secondary btn-delete"
+								style="width: 36px;height: 28.5px;margin-left: 2px;padding-top: 1px;border-top-width: 0px;border-bottom-width: 0px;padding-bottom: 1px;margin-bottom: 0px;"
+								(click)="resetForm('PersonalDetailsForm')" data-toggle="tooltip" title="reset"
+								*ngIf="PersonalDetailsForm.status !== 'DISABLED'">
+								<i class="fa fa-undo" aria-hidden="true"></i>
+							</button>
+							<button [disabled]="PersonalDetailsForm.invalid" type="button"
+								(click)="onSubmit('PersonalDetailsForm')" data-toggle="tooltip" title="save"
+								class="btn btn-secondary btn-icon-secondary btn-save"
+								style="width: 36px;height: 28.5px;margin-left: 2px;padding-top: 1px;border-top-width: 0px;border-bottom-width: 0px;padding-bottom: 1px;margin-bottom: 0px;"
+								*ngIf="PersonalDetailsForm.status !== 'DISABLED'">
+								<i class="fa fa-save" aria-hidden="true"></i>
+							</button>
+							
+						</div>
+					</div>
+				</div>
+				<form [formGroup]="PersonalDetailsForm">
+					<div class="card-body">
+						<div class="row" style="height: 42px;">
+							<mat-form-field class="mb-3 col-md-4" appearance="outline" style="padding-right: 0px;">
+									<mat-label>Select the Account Holder from the list</mat-label>
+									<mat-select panelClass="selectClass" formControlName="selFamMemberId" disableOptionCentering matNativeControl
+									[(ngModel)]="selFamMemberId"	(ngModelChange)="selectFamilyMemDtl($event)">
+										<mat-option *ngFor="let selectFamMember of getAllFamilyMemberList; let i=index;"
+											[value]="selectFamMember.personalDetail.individualId">
+											<div style="display:flex; justify-content: space-between">
+												<span>{{selectFamMember.personalDetail.firstName}}
+													{{selectFamMember.personalDetail.middleName}}
+													{{selectFamMember.personalDetail.lastName}}</span>
+											</div>
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+						</div>
+						<div class="row" style="height: 42px;">
+							<mat-form-field class="mb-3 col-md-4" appearance="outline" style="padding-right: 0px;">
+								<mat-label>Title</mat-label>
+								<mat-select disableOptionCentering matNativeControl panelClass="selectClass"
+									formControlName="title" required>
+									<mat-option *ngFor="let key of TitleList; let i=index" [value]="key.value">
+										{{key.title}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+						<div class="row" style="height: 42px;">
+							<mat-form-field class="mb-3 col-md-4" appearance="outline" style="padding-right: 0px;">
+								<mat-label>First Name</mat-label> <input matInput placeholder="First Name"
+									formControlName="firstName" type="text" maxlength="50" required>
+							</mat-form-field>
+							<mat-form-field class="mb-3 col-md-4" appearance="outline"
+								style="padding-left: 3px;padding-right: 0px;">
+								<mat-label>Middle Name</mat-label> <input matInput formControlName="middleName"
+									placeholder="Middle Name" type="text" maxlength="50">
+							</mat-form-field>
+							<mat-form-field class="mb-3 col-md-4" appearance="outline"
+								style="padding-left: 3px;padding-right: 10px;">
+								<mat-label>Last Name</mat-label> <input matInput formControlName="lastName"
+									placeholder="Last Name" type="text" maxlength="50" required>
+							</mat-form-field>
+
+						</div>
+						<div class="row" style="height: 42px;">
+
+							<mat-form-field class="mb-3 col-md-4" appearance="outline" style="padding-right: 0px;">
+								<mat-label>Gender</mat-label>
+								<mat-select disableOptionCentering matNativeControl formControlName="gender" required
+									panelClass="selectClass">
+									<mat-option *ngFor="let key of GenderList; let i=index"
+										[value]="GenderList[i].value">{{GenderList[i].gender}}</mat-option>
+								</mat-select>
+								<mat-error *ngIf="PersonalDetailsForm.controls.gender.errors?.required">
+									Invalid entry </mat-error>
+							</mat-form-field>
+							<mat-form-field class="mb-3 col-md-4" style="padding-left: 3px;padding-right: 0px;"
+								appearance="outline">
+								<input matInput formControlName="dateOfBirth" [min]="minDate" [max]="maxDate"
+									maxlength="10" [matDatepicker]="dateOfBirth" placeholder="Date of Birth" required>
+								<mat-datepicker-toggle matSuffix [for]="dateOfBirth"> </mat-datepicker-toggle>
+								<mat-datepicker #dateOfBirth></mat-datepicker>
+								<mat-error *ngIf="PersonalDetailsForm.controls.dateOfBirth.errors?.underage">
+									Age less than 18 years</mat-error>
+								<mat-error *ngIf="PersonalDetailsForm.controls.dateOfBirth.errors?.overage">Age
+									more than 100 years</mat-error>
+								<mat-error
+									*ngIf="PersonalDetailsForm.controls.dateOfBirth.errors && !PersonalDetailsForm.controls.dateOfBirth.errors?.underage && !PersonalDetailsForm.controls.dateOfBirth.errors?.overage">
+									Date of Birth is required/Invalid entry. Accepted format -
+									dd/mm/yyyy</mat-error>
+							</mat-form-field>
+						</div>
+						<div class="row" style="height: 47px;" >
+							<div class="col-sm-8 col-md-8 col-lg-8"
+								style="text-align: left;height: 80px;padding-right: 0px;">
+								<mat-form-field class="mb-12 col-md-12" appearance="outline"
+									style="width: 100%;padding-left: 0px;padding-right: 0px;">
+									<mat-label *ngIf="selectedAddressId!=-1">Select Address from the list </mat-label>
+									<mat-select disableOptionCentering matNativeControl formControlName="selectedAddressId" 
+										 panelClass="selectClass" [(ngModel)]="selectedAddressId"	(ngModelChange)="AddeClk($event)">
+										<mat-option [value]="-1" class="hidden" >Select Address from the list
+										</mat-option>
+										<mat-option *ngFor="let x of AddressList; let i=index;"
+											[value]="x.addressId">
+											{{x.addressLine1 +" " + x.addressLine2 + " " + x.addressLine3 + " " + x.addressLine4 + " " + x.postCode + " " + x.country}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="row" style="height: 40px;">
+							<mat-form-field class="mb-3 col-md-4" appearance="outline" style="padding-right: 0px;">
+								<mat-label>Address Line 1</mat-label>
+								<input formControlName="addressLine1" matInput placeholder="Address Line 1"
+									maxlength="50" type="text">
+							</mat-form-field>
+							<mat-form-field class="mb-3 col-md-4" appearance="outline"
+								style="padding-left: 3px;padding-right: 0px;">
+								<mat-label>Address Line 2</mat-label>
+								<input matInput formControlName="addressLine2" placeholder="Address Line 2"
+									maxlength="50" type="text">
+							</mat-form-field>
+							<mat-form-field class="mb-3 col-md-4" appearance="outline"
+								style="padding-left: 3px;padding-right: 10px;">
+								<mat-label>Address Line 3</mat-label>
+								<input matInput formControlName="addressLine3" placeholder="Address Line 3"
+									maxlength="50" type="text">
+							</mat-form-field>
+						</div>
+						<div class="row" style="height: 47px;">
+							<mat-form-field class="mb-3 col-md-4" appearance="outline" style="padding-right: 0px;">
+								<mat-label>Town / City</mat-label> <input matInput maxlength="50"
+									formControlName="addressLine4" placeholder="Town / City" type="text">
+							</mat-form-field>
+							<mat-form-field class="mb-3 col-md-4" appearance="outline" maxlength="100"
+								style="padding-left: 3px;padding-right: 0px;">
+								<mat-label>Postcode</mat-label>
+								<input matInput formControlName="postCode" placeholder="Post Code" maxlength="10"
+									type="text" >
+							</mat-form-field>
+							<mat-form-field class="mb-3 col-md-4" appearance="outline"
+								style="padding-left: 3px;padding-right: 10px;">
+								<mat-label>County / State</mat-label>
+								<input matInput formControlName="countryState" placeholder="County / Sate" type="text">
+							</mat-form-field>
+						</div>
+						<div class="row" style="height: 47px;">
+							<mat-form-field class="mb-3 col-md-4" appearance="outline" style="padding-right: 0px;">
+								<mat-label *ngIf="selectedEmailId!=-1">Email Id </mat-label>
+								<mat-select formControlName="selectedEmailId" disableOptionCentering matNativeControl panelClass="selectClass" >
+									<mat-option [value]="-1" class="hidden">Select Email Id</mat-option>
+									<mat-option *ngFor="let x of EmailList;"
+										[value]="x.emailId">{{x.emailAddress +	x.primaryFlag.replace("N","").replace("Y"," (Primary)")}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<mat-form-field class="mb-3 col-md-4" appearance="outline" style="padding-right: 0px;padding-left: 3px;">
+								<mat-label *ngIf="selectedPhoneId!=-1">Phone Number </mat-label>
+								<mat-select formControlName="selectedPhoneId" panelClass="selectClass" disableOptionCentering matNativeControl>
+									<mat-option [value]="-1" class="hidden">Select
+										Phone Number</mat-option>
+									<mat-option *ngFor="let x of PhoneList;"
+										[value]="x.phoneId">{{x.countryCode + " - "
+												+ x.phoneNumber + x.primaryFlag.replace("N","").replace("Y","
+												(Primary)")}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+						<div *ngIf="pdStatusMsg!=null" #alert style="height: 31px;padding-top: 5px;margin-bottom: 0px;padding-bottom: 5px;margin-bottom: 3px;" class="alert alert-success alert-dismissible fade show" role="alert">
+							<button type="button" class="close" aria-label="Close" (click)="closeMessage()">
+							  <span aria-hidden="true">&times;</span>
+							</button>
+							{{pdStatusMsg}}
+						</div>
+					</div>
+				</form>
+			</div>
+			<!-- End Personal Detail -->
+			<!-- Start About the Account-->
+			<div class="card mb-4" style="margin-top: 20px;">
+				<div class="card-header" style="text-align: center;padding-bottom: 5px;padding-top: 5px;height: 42px;">
+					<div class="row" style="padding-top: 0px;">
+						<div class="col-sm-6 col-md-6 col-lg-6"
+							style="text-align: left;padding-top: 0px;padding-left: 20px;">
+							<div class="account-heading"><b>About The Account</b></div>
+						</div>
+						<div class="col-sm-6 col-md-6 col-lg-6" style="text-align: right;padding-top: 2px;">
+							<button type="button" class="btn btn-secondary btn-icon-secondary btn-edit" [disabled]="valAccountId===null"
+								style="width: 36px;height: 28.5px;margin-left: 2px;padding-top: 1px;border-top-width: 0px;border-bottom-width: 0px;padding-bottom: 1px;margin-bottom: 0px;"
+								(click)="toggleEditState('AccountDetailsForm')"
+								*ngIf="AccountDetailsForm.status === 'DISABLED'">
+								<i class="fa fa-edit" aria-hidden="true"></i>
+							</button>
+							<button type="button" class="btn btn-secondary btn-icon-secondary btn-delete"
+								style="width: 36px;height: 28.5px;margin-left: 2px;padding-top: 1px;border-top-width: 0px;border-bottom-width: 0px;padding-bottom: 1px;margin-bottom: 0px;"
+								(click)="resetForm('AccountDetailsForm')"
+								*ngIf="AccountDetailsForm.status !== 'DISABLED'">
+								<i class="fa fa-undo" aria-hidden="true"></i>
+							</button>
+							<button [disabled]="AccountDetailsForm.value.accountNo===null || AccountDetailsForm.value.accountNo===''" type="button"
+								style="width: 36px;height: 28.5px;margin-left: 2px;padding-top: 1px;border-top-width: 0px;border-bottom-width: 0px;padding-bottom: 1px;margin-bottom: 0px;"
+								(click)="onSubmit('AccountDetailsForm')"
+								class="btn btn-secondary btn-icon-secondary btn-save"
+								*ngIf="AccountDetailsForm.status !== 'DISABLED'">
+								<i class="fa fa-save" aria-hidden="true"></i>
+							</button>
+							
+						</div>
+					</div>
+				</div>
+
+				<form [formGroup]="AccountDetailsForm">
+					<div class="card-body">
+						<div class="row" style="height: 42px;">
+							<mat-form-field class="mb-6 col-md-6" appearance="outline" style="padding-right: 0px;">
+								<mat-label>Account Number</mat-label> <input maxlength="30" matInput formControlName="accountNo"
+									placeholder="Account No" type="text">
+							</mat-form-field>
+							<mat-form-field class="mb-6 col-md-6" appearance="outline"
+								style="padding-left: 3px;padding-right: 10px;">
+								<mat-label>Short Code</mat-label> <input matInput formControlName="shortCode"
+								maxlength="20"	placeholder="Short Code" type="text">
+							</mat-form-field>
+						</div>
+						<div class="row" style="height: 47px;">
+							<mat-form-field class="mb-3 col-md-6" appearance="outline" style="padding-right: 0px;">
+								<mat-label>Type Of Account</mat-label>
+								<mat-select disableOptionCentering matNativeControl formControlName="accounType"
+									panelClass="selectClass">
+									<mat-option value="1">Savings</mat-option>
+									<mat-option value="2">Current</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<mat-form-field class="mb-3 col-md-6" appearance="outline"
+								style="padding-left: 3px;padding-right: 10px;width: 100%">
+								<input matInput width="100%" formControlName="accountOpenDate" [min]="minDate"
+									[max]="maxDate" maxlength="10" [matDatepicker]="accountOpenDate"
+									placeholder="Account Opening Date" required>
+								<mat-datepicker-toggle style="height: 25px;width: 25px;" matSuffix
+									[for]="accountOpenDate"></mat-datepicker-toggle>
+								<mat-datepicker #accountOpenDate></mat-datepicker>
+								<mat-error  *ngIf="AccountDetailsForm.controls.accountOpenDate.errors?.forbiddenFutureDate">
+									Duplicate Email Id entered</mat-error>
+							</mat-form-field>
+						</div>
+
+						<div class="row" style="height: 40px;">
+							<div class="mb-3 col-md-3">
+								<mat-slide-toggle color="primary" formControlName="isJointAccount" [(ngModel)]="selectedJointAccnt" 
+									(change)="onToggleChange($event)">Joint Account?</mat-slide-toggle>
+							</div>
+						</div>
+						<div class="row" style="height: 47px;" *ngIf="isJointAccountHldr1">
+							<div class="col-sm-6 col-md-6 col-lg-6" style="padding-right: 0px;">
+								<mat-form-field appearance="outline"
+									style="width: 100%;padding-right: 0px;padding-left: 0px;height: 38px;">
+									<mat-label>Name of Joint A/C holder1</mat-label>
+									<input matInput maxlength="100" formControlName="jntAccntHldrName1"	placeholder="Joint Account Holder Name" type="text">
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="row" style="height: 47px;" *ngIf="isJointAccountHldr2">
+							<div class="col-sm-6 col-md-6 col-lg-6" style="padding-right: 0px;">
+								<mat-form-field appearance="outline"
+									style="width: 100%;padding-right: 0px;padding-left: 0px;height: 50px;">
+									<mat-label>Name of Joint A/C holder2</mat-label>
+									<input matInput maxlength="100" formControlName="jntAccntHldrName2"	placeholder="Joint Account Holder Name" type="text">
+								</mat-form-field>
+								<br>
+							</div>
+						</div>
+						<div class="row" style="height: 47px;" *ngIf="isJointAccountHldr3">
+							<div class="col-sm-6 col-md-6 col-lg-6" style="padding-right: 0px;">
+								<mat-form-field appearance="outline"
+									style="width: 100%;padding-right: 0px;padding-left: 0px;height: 50px;">
+									<mat-label>Name of Joint A/C holder3</mat-label>
+									<input matInput maxlength="100" formControlName="jntAccntHldrName3"	placeholder="Joint Account Holder Name" type="text">
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="row" style="height: 47px;" *ngIf="isJointAccountHldr4">
+							<div class="col-sm-6 col-md-6 col-lg-6" style="padding-right: 0px;">
+								<mat-form-field appearance="outline"
+									style="width: 100%;padding-right: 0px;padding-left: 0px;height: 50px;">
+									<mat-label>Name of Joint A/C holder</mat-label>
+									<input matInput maxlength="100" formControlName="jntAccntHldrName4"	placeholder="Joint Account Holder Name" type="text">
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="row" style="height: 47px;" *ngIf="isJointAccountHldr5">
+							<div class="col-sm-6 col-md-6 col-lg-6" style="padding-right: 0px;">
+								<mat-form-field appearance="outline"
+									style="width: 100%;padding-right: 0px;padding-left: 0px;height: 38px;">
+									<mat-label>Name of Joint A/C holder</mat-label>
+									<input matInput maxlength="100" formControlName="jntAccntHldrName5"	placeholder="Joint Account Holder Name" type="text">
+								</mat-form-field><br>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6 col-md-6 col-lg-6" style="text-align: left;" >
+								<button class="btn btn-link" [disabled]="butDisAddJoint" style="cursor:pointer;color: #0000FF;padding-left: 1px;font-size: 12px;"  (click)="addJointAccountHolder()" ><u>Add Another Joint A/C holder</u></button> 
+							</div>
+						</div>
+
+						<div class="row" style="padding-top: 10px;">
+							<mat-form-field class="mb-12 col-md-12">
+								<mat-label>Additional Information</mat-label>
+								<textarea style="font-size: smaller;" #message2 maxlength="500" matInput rows="5"
+									formControlName="additionalAccountInfo" ></textarea>
+								<mat-hint align="end">{{message2.value.length}} / 500</mat-hint>
+							</mat-form-field>
+						</div>
+						<div *ngIf="accntStatusMsg!=null" #alert style="height: 31px;padding-top: 5px;margin-bottom: 0px;padding-bottom: 5px;margin-bottom: 3px;" class="alert alert-success alert-dismissible fade show" role="alert">
+							<button type="button" class="close" aria-label="Close" (click)="closeMessage()">
+							  <span aria-hidden="true">&times;</span>
+							</button>
+							{{accntStatusMsg}}
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<!-- End About the Account-->
+			<!-- Adding Document Detail -->
+			<div class="card mb-4" style="margin-top: 20px;">
+				<div class="card-header" style="text-align: center;padding-bottom: 5px;padding-top: 5px;height: 42px;">
+					<div class="row" style="padding-top: 0px;">
+						<div class="col-sm-6 col-md-6 col-lg-6"
+							style="text-align: left;padding-top: 0px;padding-left: 20px;">
+							<div class="account-heading"><b>Attached Document Detail</b></div>
+						</div>
+						<div class="col-sm-6 col-md-6 col-lg-6" style="text-align: right;padding-top: 2px;">
+							<button type="button" [disabled]="valAccountId===null"
+								style="width: 36px;height: 28.5px;margin-left: 2px;padding-top: 1px;border-top-width: 0px;border-bottom-width: 0px;padding-bottom: 1px;margin-bottom: 0px;"
+								class="btn btn-secondary btn-icon-secondary btn-edit"
+								(click)="toggleEditState('DocDetailsForm')" *ngIf="DocumentDetailShow">
+								<i class="fa fa-edit" aria-hidden="true"></i>
+							</button>
+							<button type="button"
+								style="width: 36px;height: 28.5px;margin-left: 2px;padding-top: 1px;border-top-width: 0px;border-bottom-width: 0px;padding-bottom: 1px;margin-bottom: 0px;"
+								class="btn btn-secondary btn-icon-secondary btn-delete"
+								(click)="resetForm('DocDetailsForm')" *ngIf="!DocumentDetailShow">
+								<i class="fa fa-undo" aria-hidden="true"></i>
+							</button>
+							<button
+								style="width: 36px;height: 28.5px;margin-left: 2px;padding-top: 1px;border-top-width: 0px;border-bottom-width: 0px;padding-bottom: 1px;margin-bottom: 0px;"
+								[disabled]="DocDetailsForm.invalid || (selectedDocumentId==null && butDisableDocument!=true)||(ActiveDocumentIdentifier==null && uploader.queue.length==0)"
+								type="button" (click)="onSubmitDoc()"
+								class="btn btn-secondary btn-icon-secondary btn-save" *ngIf="!DocumentDetailShow">
+								<i class="fa fa-save" aria-hidden="true"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+
+				
+					<form [formGroup]="DocDetailsForm" (ngSubmit)="onSubmit('DocDetailsForm')">
+					<div class="card-body">
+						<div class="row" style="height: 42px;" *ngIf="DocumentList.length>0">
+							<mat-form-field class="mb-8 col-md-8" appearance="outline">
+								<mat-label>Select Document from the list </mat-label>
+								<mat-select disableOptionCentering matNativeControl [(ngModel)]="selectedDocumentId"
+									(valueChange)="AddeDocument($event)" panelClass="selectClass" formControlName="selectedDocumentId">
+									<mat-option [value]="-1" class="hidden" disabled>Select
+										Document from the list</mat-option>
+									<mat-option *ngFor="let x of DocumentList; let i=index;"
+										[value]="DocumentList[i].documentId">
+										<div style="display:flex; justify-content: space-between">
+										<span>{{x.documentType}}-{{x.documentNumber}}</span>
+										<span (click)="confirmDocBox('DocDetailsForm')">
+											<i class="fa fa-trash" aria-hidden="true"></i>
+										</span></div>
+									</mat-option>
+									<mat-option [value]="0">Add New Document</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+						<div class="row" style="height: 47px;">
+							<mat-form-field class="mb-3 col-md-4" appearance="outline"
+								style="padding-right: 0px;width: 100%">
+								<mat-label>Document Type</mat-label>
+								<input matInput placeholder="Document Type" formControlName="documentType" type="text"
+									required>
+							</mat-form-field>
+							<mat-form-field class="mb-3 col-md-4" appearance="outline"
+								style="padding-left: 3px;padding-right: 0px;width: 100%">
+								<mat-label>Document Number</mat-label>
+								<input matInput placeholder="Document Number" formControlName="documentNumber"
+									type="text">
+							</mat-form-field>
+							<mat-form-field class="mb-3 col-md-4" appearance="outline"
+								style="padding-left: 3px;padding-right: 10px;width: 100%">
+								<mat-label>Country of Issue</mat-label>
+								<input matInput placeholder="Country of Issue" formControlName="countryOfIssue"
+									type="text">
+							</mat-form-field>
+						</div>
+						<div class="row" style="height: 47px;">
+							<mat-form-field class="mb-3 col-md-4" appearance="outline"
+								style="padding-right: 0px;width: 100%">
+								<mat-label>Issuing Authority</mat-label>
+								<input matInput placeholder="Issuing Authority" formControlName="issueingAuthority"
+									type="text">
+							</mat-form-field>
+							<mat-form-field class="mb-4 col-md-4" appearance="outline"
+								style="padding-left: 3px;padding-right: 0px;width: 100%">
+								<mat-label>Issue Date</mat-label>
+								<input matInput [matDatepicker]="issueDate" [min]="minDate" [max]="maxDate" placeholder="Issue Date"
+									formControlName="issueDate" >
+								<mat-datepicker-toggle matSuffix [for]="issueDate">
+								</mat-datepicker-toggle>
+								<mat-datepicker #issueDate></mat-datepicker>
+							</mat-form-field>
+							<mat-form-field class="mb-4 col-md-4" appearance="outline"
+								style="padding-left: 3px;padding-right: 10px;width: 100%">
+								<mat-label>Expiry Date</mat-label>
+								<input matInput [matDatepicker]="expiaryDate" placeholder="Expiry Date"
+									formControlName="expiaryDate">
+								<mat-datepicker-toggle matSuffix [for]="expiaryDate">
+								</mat-datepicker-toggle>
+
+								<mat-datepicker #expiaryDate></mat-datepicker>
+							</mat-form-field>
+						</div>
+						<div class="row" style="height: 47px;" *ngIf="ActiveDocumentIdentifier==null">
+							<div class="col-sm-6 col-md-6 col-lg-6" style="text-align: left;">
+								<label> <i class="fa fa-paperclip fa-2x" aria-hidden="true"
+										title="Attach file"></i><input style="display: none;" type="file" size="100"
+										ng2FileSelect [uploader]="uploader">
+								</label>
+							</div>
+						</div>
+						<div class="row" style="height: 47px;" *ngIf="ActiveDocumentIdentifier!=null">
+							<div class="col-sm-8 col-md-8 col-lg-8">
+								<div class="row">
+									<div class="col-sm-12 col-md-12 col-lg-12">
+										<button mat-flat-button style="color: #0000FF;padding-left: 1px;font-size: 13px"
+											(click)="DownloadFile()"><b><u>{{ActiveDocumentIdentifier}}</u></b></button>
+										<button mat-flat-button style="color: #0000FF" (click)="item.remove()"></button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row" *ngFor="let item of uploader.queue">
+							<div class="col-sm-6 col-md-6 col-lg-6" style="text-align: left;" >
+								<button class="btn btn-link" role="link" [disabled]="!DocumentDetailShow" style="cursor:pointer;color: #0000FF;padding-left: 1px;font-size: 12px;"  (click)="DownloadFile()" ><u>{{item.file.name}}</u></button> 
+							</div>
+						</div>
+						<div class="row" style="padding-top: 10px;">
+							<mat-form-field class="mb-12 col-md-12">
+								<mat-label>Additional Information</mat-label>
+								<textarea style="font-size: smaller;" #message3 maxlength="500" matInput rows="5"
+									formControlName="additionalInformation" ></textarea>
+								<mat-hint align="end">{{message3.value.length}} / 500</mat-hint>
+							</mat-form-field>
+						</div>
+						<div *ngIf="docStatusMsg!=null" #alert style="height: 31px;padding-top: 5px;margin-bottom: 0px;padding-bottom: 5px;margin-bottom: 3px;" class="alert alert-success alert-dismissible fade show" role="alert">
+							<button type="button" class="close" aria-label="Close" (click)="closeMessage()">
+							  <span aria-hidden="true">&times;</span>
+							</button>
+							{{docStatusMsg}}
+						</div>
+					</div>
+				</form>
+			</div>
+			<!-- End of the doc attach-->
+			<!-- Start Additional information section-->
+			<div class="card mb-4" style="margin-top: 20px;" *ngIf="PersonalDetailsForm.value.firstName!='' && PersonalDetailsForm.status === 'DISABLED'">
+				<div class="card-header" style="text-align: center;padding-bottom: 5px;padding-top: 5px;height: 42px;">
+					<div class="row" style="padding-top: 0px;">
+						<div class="col-sm-6 col-md-6 col-lg-6"
+							style="text-align: left;padding-top: 0px;padding-left: 20px;">
+						<div class="account-heading"><b>Additional Information</b></div>
+					</div>
+					<div class="col-sm-6 col-md-6 col-lg-6" style="text-align: right;padding-top: 2px;">
+						<button type="button" [disabled]="valAccountId===null"
+							style="width: 36px;height: 28.5px;margin-left: 2px;padding-top: 1px;border-top-width: 0px;border-bottom-width: 0px;padding-bottom: 1px;margin-bottom: 0px;"
+							class="btn btn-secondary btn-icon-secondary btn-edit"
+							(click)="toggleEditState('AddInfoDetailsForm')" *ngIf="AddInfoDetailShow">
+							<i class="fa fa-edit" aria-hidden="true"></i>
+						</button>
+						<button type="button"
+							style="width: 36px;height: 28.5px;margin-left: 2px;padding-top: 1px;border-top-width: 0px;border-bottom-width: 0px;padding-bottom: 1px;margin-bottom: 0px;"
+							class="btn btn-secondary btn-icon-secondary btn-delete"
+							(click)="resetForm('AddInfoDetailsForm')" *ngIf="!AddInfoDetailShow">
+							<i class="fa fa-undo" aria-hidden="true"></i>
+						</button>
+						<button
+							style="width: 36px;height: 28.5px;margin-left: 2px;padding-top: 1px;border-top-width: 0px;border-bottom-width: 0px;padding-bottom: 1px;margin-bottom: 0px;"
+							[disabled]="AddInfoDetailsForm.value.additionalInformation===''"
+							type="button" (click)="onSubmit('AddInfoDetailsForm')"
+							class="btn btn-secondary btn-icon-secondary btn-save" *ngIf="!AddInfoDetailShow">
+							<i class="fa fa-save" aria-hidden="true"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+			
+			<form [formGroup]="AddInfoDetailsForm">
+				<div class="card-body">
+					<div class="row" style="height: 110px;">
+							<mat-form-field class="mb-12 col-md-12">
+								<mat-label>Additional Information</mat-label>
+								<textarea  [disabled]="AddInfoDetailShow" style="font-size: smaller;" matInput rows="5"
+								maxlength="5000"  formControlName="additionalInformation" ></textarea>
+							</mat-form-field>
+						<br />
+					</div>
+					<div *ngIf="aiStatusMsg!=null" #alert style="height: 31px;padding-top: 5px;margin-bottom: 0px;padding-bottom: 5px;margin-bottom: 3px;" class="alert alert-success alert-dismissible fade show" role="alert">
+						<button type="button" class="close" aria-label="Close" (click)="closeMessage()">
+						  <span aria-hidden="true">&times;</span>
+						</button>
+						{{aiStatusMsg}}
+					</div>
+				</div>
+			</form>
+        	</div>
+		</div>
+	</div>
+</div>

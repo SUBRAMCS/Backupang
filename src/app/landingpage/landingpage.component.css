@@ -1,0 +1,24 @@
+#welcomeUser{
+    background-image: url(/assets/landing-page/digital-protection.jpg);
+    background-size: cover;
+    padding: 45px 10px;
+    margin: 0px 15px;
+    opacity: 0.85;
+    color: white;
+}
+
+.card-parent{
+    background-color: #eeeeee;
+    margin: 0px 15px;
+    padding: 63px 10px;
+}
+
+.icons{
+    font-size: 48px;
+    padding: 10px;
+    color: #003366;
+}
+
+.pointer{
+    cursor: pointer;
+}

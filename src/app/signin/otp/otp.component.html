@@ -1,0 +1,28 @@
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <h3 class="register-heading mt-5">Log on to your account</h3>
+        <div class="row register-form justify-content-center">
+            <div class="col-md-8">
+                <form [formGroup]="otpForm" (ngSubmit)="onSubmit()" class="overflow-hidden">
+                    <mat-form-field class="mb-3 col-md-12">
+                      <input matInput placeholder="Please enter OTP" formControlName="otp" required>
+                      <mat-error *ngIf="f.otp.errors?.required">OTP is required</mat-error>
+                      <mat-error *ngIf="f.otp.errors?.pattern">Please enter 6 digit OTP</mat-error>
+                    </mat-form-field>
+                    <alert></alert>
+                    <div class="col-md-12 float-right">
+                      <button [disabled]="loading || otpForm.invalid" class="btn btn-primary btnRegister mt-5">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Submit
+                      </button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-12 text-center mt-5">
+                Didnt receive the code : <a href="javascript:void(0)" (click)="resendOTP()">Resend</a>
+                  
+            </div>
+        </div>
+    </div>
+    
+</div>

@@ -1,0 +1,27 @@
+{
+    "individualId": 1,
+    "personalDetail": {
+        "individualId": 1,
+        "title": "Mr",
+        "firstName": "Vaibhav",
+        "middleName": null,
+        "lastName": "Mehar",
+        "gender": "M",
+        "dateOfBirth": "1984-03-09",
+        "relationship": ""
+    },
+    "addressDetail": [
+        {
+            "addressId": 1,
+            "individualId": 1,
+            "addressLine1": "KOTRA ROAD",
+            "addressLine2": "RAIPUR",
+            "addressLine3": "RAJEEV NAGAR",
+            "addressLine4": null,
+            "countryState": "UK",
+            "country": "UK",
+            "postCode": "496001"
+        }
+    ],
+    "contactDetail": []
+}

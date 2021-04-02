@@ -1,0 +1,402 @@
+<!-- Tab Accounts -->
+<div class="tab-pane fade show active" id="AccountSetting" role="tabpanel" aria-labelledby="AccountSetting-tab">
+    <div class="tab-pane fade show active" id="family" role="tabpanel" aria-labelledby="family-tab">
+        <div id="accordion" class="accordion">
+            <div class="card mb-0">
+                <div class="card-body">
+                    <div class="account-form">
+                            <!-- Adding Personal Details -->
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <div class="account-heading">Personal Detail</div>
+                                    <div class="button-wrap">
+                                        <button type="button" data-toggle="tooltip" title="edit" class="btn btn-secondary btn-icon-secondary btn-edit"
+                                            (click)="toggleEditState('PersonalDetailsForm')" 
+                                             *ngIf="PersonalDetailsForm.status === 'DISABLED'">                                            
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button [disabled]="PersonalDetailsForm.invalid||changeCapture('PersonalDetailsForm')" type="button"
+                                            (click)="onSubmit('PersonalDetailsForm')" data-toggle="tooltip" title="save"
+                                            class="btn btn-secondary btn-icon-secondary btn-save"
+                                            *ngIf="PersonalDetailsForm.status !== 'DISABLED'">
+                                            <i class="fa fa-save" aria-hidden="true"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-secondary btn-icon-secondary btn-delete"
+                                            (click)="resetForm('PersonalDetailsForm')" data-toggle="tooltip" title="reset"
+                                            *ngIf="PersonalDetailsForm.status !== 'DISABLED'">
+                                            <i class="fa fa-undo" aria-hidden="true"></i>
+                                        </button>
+                                 </div>
+                                </div>
+                                <form [formGroup]="PersonalDetailsForm">
+                                    <div class="card-body">
+                                        <div class="account-form">
+                                            <div class="row">
+                                                <mat-form-field class="mb-3 col-md-4">
+                                                    <mat-label>Title</mat-label>
+                                                    <select matNativeControl formControlName="title" required>
+                                                        <option class="hidden" selected disabled value=" ">&nbsp;</option>
+                                                        <option *ngFor="let key of TitleList; let i=index"
+                                                            [value]="TitleList[i].value">{{TitleList[i].title}}</option>    
+                                                    </select>
+                                                    <mat-error
+                                                    *ngIf="PersonalDetailsForm.controls.title.errors?.required">
+                                                    Invalid entry </mat-error>
+                                                </mat-form-field>
+
+                                            </div>
+                                            <div class="row">
+                                                <mat-form-field class="mb-3 col-md-4">
+                                                    <input matInput placeholder="First Name" formControlName="firstName"
+                                                        type="text" maxlength="50" required>
+                                                    <mat-error
+                                                        *ngIf="PersonalDetailsForm.controls.firstName.errors?.required">
+                                                        First Name is required</mat-error>
+                                                    <mat-error
+                                                        *ngIf="PersonalDetailsForm.controls.firstName.errors?.pattern">
+                                                        Invalid entry </mat-error>
+                                                    <mat-error
+                                                        *ngIf="PersonalDetailsForm.controls.firstName.errors?.maxlength">
+                                                        First Name exceeded max length (50)</mat-error>
+													                                                <mat-error
+                                                    *ngIf="PersonalDetailsForm.controls.firstName.errors?.multiplespaces">
+                                                    Multiple spaces between characters is not allowed</mat-error>
+                                                    <mat-error
+                                                        *ngIf="PersonalDetailsForm.controls.firstName.errors?.minlength && !PersonalDetailsForm.controls.firstName.errors?.pattern">
+                                                        First Name too short (minimum 1 characters)</mat-error>
+                                                </mat-form-field>
+                                                <mat-form-field class="mb-3 col-md-4">
+                                                    <input matInput formControlName="middleName" placeholder="Middle Name"
+                                                        type="text" maxlength="50">
+                                                    <mat-error
+                                                        *ngIf="PersonalDetailsForm.controls.middleName.errors?.pattern">
+                                                        Invalid entry</mat-error>
+                                                    <mat-error
+                                                        *ngIf="PersonalDetailsForm.controls.middleName.errors?.maxlength">
+                                                        Middle Name exceeded max length (50)</mat-error>
+                                                    <mat-error
+                                                        *ngIf="PersonalDetailsForm.controls.middleName.errors?.minlength && !PersonalDetailsForm.controls.middleName.errors?.pattern">
+                                                        Middle Name too short (minimum 3 characters)</mat-error>
+                                                </mat-form-field>
+                                                <mat-form-field class="mb-3 col-md-4">
+                                                    <input matInput formControlName="lastName" placeholder="Last Name"
+                                                        type="text" maxlength="50" required>
+                                                    <mat-error
+                                                        *ngIf="PersonalDetailsForm.controls.lastName.errors?.required">Last
+                                                        Name is required</mat-error>
+                                                    <mat-error
+                                                        *ngIf="PersonalDetailsForm.controls.lastName.errors?.pattern">
+                                                        Invalid entry</mat-error>
+                                                    <mat-error
+                                                        *ngIf="PersonalDetailsForm.controls.lastName.errors?.maxlength">
+                                                        Last Name exceeded max length (50)</mat-error>
+                                                    <mat-error
+                                                        *ngIf="PersonalDetailsForm.controls.lastName.errors?.minlength && !PersonalDetailsForm.controls.lastName.errors?.pattern">
+                                                        Last Name too short (minimum 1 characters)</mat-error>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="row">
+                                                <mat-form-field class="mb-3 col-md-3">
+                                                    <mat-label>Gender</mat-label>
+                                                    <select matNativeControl formControlName="gender" required>
+                                                        <option class="hidden" selected disabled value=" ">&nbsp;</option>
+                                                        <option *ngFor="let key of GenderList; let i=index"
+                                                            [value]="GenderList[i].value">{{GenderList[i].gender}}</option>
+                                                    </select>
+                                                    <mat-error
+                                                    *ngIf="PersonalDetailsForm.controls.gender.errors?.required">
+                                                    Invalid entry </mat-error>
+                                                </mat-form-field>
+                                                <mat-form-field class="mb-3 col-md-3 offset-md-1">
+                                                    <input matInput formControlName="dateOfBirth" [min]="minDate" [max]="maxDate" maxlength="10"
+                                                         [matDatepicker]="dateOfBirth"
+                                                        placeholder="Date of Birth" required>
+                                                    <mat-datepicker-toggle matSuffix [for]="dateOfBirth">
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker #dateOfBirth></mat-datepicker>
+                                                    <mat-error
+                                                        *ngIf="PersonalDetailsForm.controls.dateOfBirth.errors?.underage">
+                                                        Age less than 18 years</mat-error>
+                                                    <mat-error
+                                                        *ngIf="PersonalDetailsForm.controls.dateOfBirth.errors?.overage">Age
+                                                        more than 100 years</mat-error>
+												<mat-error
+                                                    *ngIf="PersonalDetailsForm.controls.dateOfBirth.errors && !PersonalDetailsForm.controls.dateOfBirth.errors?.underage && !PersonalDetailsForm.controls.dateOfBirth.errors?.overage">
+                                                    Date of Birth is required/Invalid entry. Accepted format - dd/mm/yyyy</mat-error>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+									<div *ngIf="pfStatusMsg!=null" class="alert alert-{{msgType}} alert-dismissible" role="alert">
+                                      {{pfStatusMsg}}
+                                      <button style="font-size:20px; outline: none;" type="button" class="close" data-dismiss="alert" (click)="ResetMsgBox()">x</button>                                   
+								   </div>
+                                    </div>
+    
+                                </form>
+                            </div>
+                            <!-- Adding Address Detail -->
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <div class="account-heading">Address Detail</div>
+                                    <div class="button-wrap">
+                                        <button type="button" class="btn btn-secondary btn-icon-secondary btn-edit" data-toggle="tooltip" title="edit"
+                                            (click)="toggleEditState('AddressDetailsForm')" *ngIf="AddressDetailShow">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button
+                                             [disabled]="AddressDetailsForm.invalid || changeCapture('AddressDetailsForm')"
+                                            type="button" (click)="onSubmit('AddressDetailsForm')" data-toggle="tooltip" title="save"
+                                            class="btn btn-secondary btn-icon-secondary btn-save"
+                                            *ngIf="!AddressDetailShow">
+                                            <i class="fa fa-save" aria-hidden="true"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-secondary btn-icon-secondary btn-delete" data-toggle="tooltip" title="reset"
+                                            (click)="resetForm('AddressDetailsForm')" *ngIf="!AddressDetailShow">
+                                            <i class="fa fa-undo" aria-hidden="true"></i>
+                                        </button>
+                                          </div>
+                                </div>
+    
+    
+                                <br>
+                          <div class="card-body" *ngIf="PostalBoxShow"> 
+                         <form [formGroup]="PostCodeForm">
+                            <div class="account-form">
+                                <div class="row post-code">   
+                                    <mat-form-field class="mb-3 col-md-4"> 
+                                        <input placeholder="Postcode" matInput formControlName="postCode" minlength="4" maxlength="7" type="text" required>
+                                        <mat-error *ngIf="PostCodeForm.controls.postCode.errors?.pattern || PostCodeForm.controls.postCode.errors?.minlength">
+                                        Invalid entry</mat-error>
+                                        <mat-error
+                                        *ngIf="PostCodeForm.controls.postCode.errors?.required">
+                                        Postcode is required</mat-error>
+                                        <mat-error
+                                        *ngIf="PostCodeForm.controls.postCode.errors?.incorrect">
+                                        Please enter a valid Postcode</mat-error>
+                                    </mat-form-field>
+
+                                    <div class="col-me-8">
+                                        <button type="button" 
+                                            style="font-family:Arial, Helvetica, sans-serif;font-size: small;padding: 10px;"
+                                            class="btn btn-secondary btn-icon-secondary btn-delete"
+                                            (click)="fetchAddressForPostCode(PostCodeForm.controls.postCode.value)" [disabled]="!PostCodeForm.controls.postCode.valid">
+                                            <i *ngIf="!loading" class="fa fa-search" aria-hidden="true"></i>
+                                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                            Find Address
+                                        </button>
+                                        <button type="button"
+                                            style="font-family:Arial, Helvetica, sans-serif;font-size: small;padding: 10px;margin-left: 15px;"
+                                            class="btn btn-secondary btn-icon-secondary btn-delete"
+                                            (click)="AddAddressManually()">
+                                            <i class="fa fa-plus-square" aria-hidden="true"></i> Add Address
+                                            Manually
+                                        </button>
+                                    </div>                                   
+                                </div>
+                            </div>
+                         </form>
+                                    <div class="account-form" *ngIf="PostalListShow">
+                                        <div class="row">
+                                            <mat-form-field class="mb-8 col-md-8">
+                                                <mat-label *ngIf="selectPostCodeAddressId!=-1">Select Address based on Post
+                                                    Code
+                                                </mat-label>
+                                                <select matNativeControl [(ngModel)]="selectPostCodeAddressId"
+                                                    (ngModelChange)="AddeClkPostCode($event)">
+                                                    <option [value]="-1" class="hidden" disabled>Select Address based on
+                                                        Post Code
+                                                    </option>
+                                                    <option *ngFor="let x of AddressPostCodeList; let i=index;"
+                                                        [value]="i">
+                                                        {{x.line_1}}</option>
+                                                </select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+    
+ 
+
+    
+                                <form [formGroup]="AddressDetailsForm">
+                                    <div class="card-body">
+                                        <div class="account-form">
+                                            <div class="row">
+                                                <mat-form-field class="mb-3 col-md-4">
+                                                    <input formControlName="addressLine1" matInput placeholder="Address 1" minlength="1" maxlength="50"
+                                                        type="text" required>
+                                                    <mat-error
+                                                        *ngIf="AddressDetailsForm.controls.addressLine1.errors?.required">
+                                                        Address1 is required</mat-error>
+                                                </mat-form-field>
+                                                <mat-form-field class="mb-3 col-md-4">
+                                                    <input matInput formControlName="addressLine2" placeholder="Address 2" maxlength="50"
+                                                        type="text">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="row">
+                                                <mat-form-field class="mb-3 col-md-4">
+                                                    <input matInput formControlName="addressLine3" placeholder="Address 3"  maxlength="50"
+                                                        type="text">
+                                                </mat-form-field>
+                                                <mat-form-field class="mb-3 col-md-4">
+                                                    <input matInput formControlName="addressLine4" placeholder="Address 4"  maxlength="50"
+                                                        type="text">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="row">
+                                                <mat-form-field class="mb-3 col-md-4">
+                                                    <input matInput formControlName="postCode" placeholder="Postcode"
+                                                        type="text" required>
+                                                        <mat-error
+                                                        *ngIf="AddressDetailsForm.controls.postCode.errors?.required">
+                                                        Postcode is required</mat-error>
+                                                </mat-form-field>
+                                                <mat-form-field class="mb-3 col-md-4">
+                                                    <input matInput formControlName="countryState" placeholder="County"  maxlength="50"
+                                                        type="text">
+                                                </mat-form-field>
+                                            </div>
+                                            
+                                            <div class="row">
+                                            <mat-form-field class="mb-3 col-md-4">
+                                                <input matInput formControlName="country" placeholder="Country" readonly
+                                                    type="text">
+                                            </mat-form-field>
+                                            </div>
+                                        </div>
+									<div *ngIf="adStatusMsg!=null" class="alert alert-{{msgType}} alert-dismissible" role="alert">
+                                      {{adStatusMsg}}
+                                      <button style="font-size:20px; outline: none;" type="button" class="close" data-dismiss="alert" (click)="ResetMsgBox()">x</button>                                   
+								   </div>
+                                    </div>
+                                </form>
+    
+                            </div>
+                            <!-- Adding Email Detail -->
+                             <div class="card mb-4" >
+                                <div class="card-header">
+                                    <div class="account-heading">Primary Email Detail</div>
+                                    <div class="button-wrap">
+                                        <button type="button" class="btn btn-secondary btn-icon-secondary btn-edit" data-toggle="tooltip" title="edit"
+                                            (click)="confirmbox('EmailDetailsForm')" *ngIf="EmailDetailShow">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button
+                                            [disabled]="EmailDetailsForm.invalid||changeCapture('EmailDetailsForm')" data-toggle="tooltip" title="save"
+                                            type="button" (click)="confirmbox('SelfEmailMsg2')"
+                                            class="btn btn-secondary btn-icon-secondary btn-save" *ngIf="!EmailDetailShow">
+                                            <i class="fa fa-save" aria-hidden="true"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-secondary btn-icon-secondary btn-delete" data-toggle="tooltip" title="reset"
+                                            (click)="resetForm('EmailDetailsForm')" *ngIf="!EmailDetailShow">
+                                            <i class="fa fa-undo" aria-hidden="true"></i>
+                                        </button>
+                                         
+                                    </div>
+                                </div>
+    
+                                <form [formGroup]="EmailDetailsForm" (ngSubmit)="onSubmit('EmailDetailsForm')">
+                                    <div class="card-body">
+                                        <div class="account-form">
+                                            <div class="row">
+                                                <mat-form-field class="mb-3 col-md-4">
+                                                    <input matInput placeholder="Email Id" formControlName="emailAddress"
+                                                        type="text" maxlength="70" required>
+                                                    <mat-error
+                                                        *ngIf="EmailDetailsForm.controls.emailAddress.errors?.required">
+                                                        Email Id is required
+                                                    </mat-error>
+                                                    <mat-error
+                                                        *ngIf="EmailDetailsForm.controls.emailAddress.errors?.pattern">
+                                                        Invalid entry</mat-error>
+                                                    <mat-error
+                                                        *ngIf="EmailDetailsForm.controls.emailAddress.errors?.maxlength">
+                                                        Email id
+                                                        exceeded max length (70)</mat-error>
+                                                </mat-form-field>
+    
+                                           </div><!-- row -->
+                                        </div>
+									<div *ngIf="edStatusMsg!=null" class="alert alert-{{msgType}} alert-dismissible" role="alert">
+                                      {{edStatusMsg}}
+                                      <button style="font-size:20px; outline: none;" type="button" class="close" data-dismiss="alert" (click)="ResetMsgBox()">x</button>                                   
+								   </div>
+                                    </div>
+                                    <!--card-body-->
+                                </form>
+                            </div>
+                             <!-- Adding Phone Detail -->
+                            <div class="card mb-4" >
+                                <div class="card-header">
+                                    <div class="account-heading">Primary Phone Detail</div>
+                                    <div class="button-wrap">
+                                        <button type="button" class="btn btn-secondary btn-icon-secondary btn-edit" data-toggle="tooltip" title="edit"
+                                              (click)="confirmbox('PhoneDetailsForm')" *ngIf="PhoneDetailShow">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button
+                                            [disabled]="PhoneDetailsForm.invalid || changeCapture('PhoneDetailsForm')" data-toggle="tooltip" title="save"
+                                            type="button" (click)="confirmbox('SelfPhoneMsg2')"
+                                            class="btn btn-secondary btn-icon-secondary btn-save" *ngIf="!PhoneDetailShow">
+                                            <i class="fa fa-save" aria-hidden="true"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-secondary btn-icon-secondary btn-delete" data-toggle="tooltip" title="reset"
+                                            (click)="resetForm('PhoneDetailsForm')" *ngIf="!PhoneDetailShow">
+                                            <i class="fa fa-undo" aria-hidden="true"></i>
+                                        </button>
+                         
+                                    </div>
+                                </div>
+
+    
+                                <form [formGroup]="PhoneDetailsForm" (ngSubmit)="onSubmit('PhoneDetailsForm')">
+                                    <div class="card-body">
+                                        <div class="account-form">
+                                            <div class="row">
+                                                <mat-form-field class="mb-3 col-md-4">
+                                                    <input matInput placeholder="Country Code" formControlName="countryCode"
+                                                        type="text" readonly>
+                                                    <mat-error
+                                                        *ngIf="PhoneDetailsForm.controls.countryCode?.errors?.pattern">
+                                                        Invalid entry</mat-error>                                                   
+                                                </mat-form-field>
+                                                <mat-form-field class="mb-3 col-md-4">
+                                                    <input matInput placeholder="Mobile Number" formControlName="phoneNumber"
+                                                        type="text" required maxlength="11">
+                                                    <mat-error
+                                                        *ngIf="PhoneDetailsForm.controls.phoneNumber?.errors?.pattern">
+                                                        Invalid entry</mat-error>
+                                                        <mat-error
+                                                        *ngIf="PhoneDetailsForm.controls.phoneNumber?.errors?.required">
+                                                        Mobile Number is required</mat-error>
+                                                </mat-form-field>
+ 
+                                            </div><!-- row -->
+                                        </div>
+									<div *ngIf="pdStatusMsg!=null" class="alert alert-{{msgType}} alert-dismissible" role="alert">
+                                      {{pdStatusMsg}}
+                                      <button style="font-size:20px; outline: none;" type="button" class="close" data-dismiss="alert" (click)="ResetMsgBox()">x</button>                                   
+								   </div>
+                                    </div>
+                                    <!--card-body-->
+                                </form>
+                            </div>
+    
+   
+                        <!--           {{PersonalDetails.value|json}}
+                    <br>
+                    {{AccountDetails.value|json}}
+                    <br>
+                    {{addressDetails.value|json}}
+                    <br>
+                    {{addressDetailsBank.value|json}}
+                    <br>
+                    {{contactDetailsForm.value|json}}
+                    <br>
+                    {{DocDetailsForm.value|json}}
+         -->
+    
+                    </div>
+                </div>
+            </div>

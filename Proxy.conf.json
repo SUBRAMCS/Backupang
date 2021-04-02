@@ -1,0 +1,19 @@
+{
+  "/Elocker/*": {
+    "target": "http://localhost:9898",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "config": {
+    "local": {
+      "baseUrl": "http://localhost:9898/"
+    },
+    "prod": {
+      "baseUrl": "http://localhost:9898/"
+    }
+  },
+  "captchaConfig": {
+    "siteKey": "6LdfK_AUAAAAAPlqPzH_w_nEaOdYmWXwWRB_AVhm"
+
+  }
+}

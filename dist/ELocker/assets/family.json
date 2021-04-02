@@ -1,0 +1,129 @@
+{
+	"accountProfileId": 1,
+	"parentIndividualId": 1,
+	"familyMembers": [
+		{
+			"personalDetail": {
+				"individualId": 4,
+				"title": "Mrs",
+				"firstName": "Namita",
+				"middleName": "",
+				"lastName": "Mehar",
+				"gender": "F",
+				"dateOfBirth": "1996-07-17",
+				"emailAddress": null,
+				"countryCode": null,
+				"phoneNumber": null,
+				"motherMaidenName": "",
+				"relationship": "Wife",
+				"primaryFlag": null
+			},
+			"AddressDetails": {
+				"Addr": [
+					{
+						"addressId": 2,
+						"individualId": 4,
+						"address1": "Smiriti Nagar-1",
+						"address2": "Bhilai",
+						"address3": "",
+						"address4": "",
+						"countryState": "",
+						"country": "UK",
+						"postCode": "496001",
+						"recordUpdatedDate": null
+					},
+					{
+						"addressId": 3,
+						"individualId": 4,
+						"address1": "Smiriti Nagar-2",
+						"address2": "Bhilai",
+						"address3": "",
+						"address4": "",
+						"countryState": "",
+						"country": "UK",
+						"postCode": "496001",
+						"recordUpdatedDate": null
+					},
+					{
+						"addressId": 4,
+						"individualId": 4,
+						"address1": "Smiriti Nagar-3",
+						"address2": "Bhilai",
+						"address3": "",
+						"address4": "",
+						"countryState": "",
+						"country": "UK",
+						"postCode": "496001",
+						"recordUpdatedDate": null
+					}
+				]
+			}
+		},
+		{
+			"personalDetail": {
+				"individualId": 5,
+				"title": "Mrs",
+				"firstName": "Jaishree",
+				"middleName": "",
+				"lastName": "Mehar",
+				"gender": "F",
+				"dateOfBirth": "1996-07-17",
+				"emailAddress": null,
+				"countryCode": null,
+				"phoneNumber": null,
+				"motherMaidenName": "",
+				"relationship": "Mother",
+				"primaryFlag": null
+			},
+			"AddressDetails": {
+				"Addr": [
+					{
+						"addressId": 3,
+						"individualId": 5,
+						"address1": "Adarsh Nagar",
+						"address2": "Durg",
+						"address3": "Chattisgarh",
+						"address4": "",
+						"countryState": "",
+						"country": "UK",
+						"postCode": "496001",
+						"recordUpdatedDate": null
+					}
+				]
+			}
+		},
+		{
+			"personalDetail": {
+				"individualId": 6,
+				"title": "Mr",
+				"firstName": "Deepak",
+				"middleName": "",
+				"lastName": "Mehar",
+				"gender": "M",
+				"dateOfBirth": "1996-07-17",
+				"emailAddress": null,
+				"countryCode": null,
+				"phoneNumber": null,
+				"motherMaidenName": "",
+				"relationship": "Brother",
+				"primaryFlag": null
+			},
+			"AddressDetails": {
+				"Addr": [
+					{
+						"addressId": 8,
+						"individualId": 5,
+						"address1": "Outer Ring Road",
+						"address2": "Bangalore",
+						"address3": "Karnataka",
+						"address4": "",
+						"countryState": "",
+						"country": "UK",
+						"postCode": "496001",
+						"recordUpdatedDate": null
+					}
+				]
+			}
+		}
+	]
+}

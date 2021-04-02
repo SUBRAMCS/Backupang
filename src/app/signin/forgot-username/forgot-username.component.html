@@ -1,0 +1,38 @@
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+      <h3 class="register-heading mt-5 font-weight-bolder">Forgot Username !!</h3>
+      <div class="row register-form justify-content-center">
+        <div class="col-md-8">
+          <form [formGroup]="funameForm" (ngSubmit)="onSubmit()" class="overflow-hidden">
+            <mat-form-field class="mb-3 col-md-12">
+              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dateOfBirth" placeholder="Date of Birth" formControlName="dateOfBirth" required readonly>
+              <mat-datepicker-toggle matSuffix [for]="dateOfBirth"></mat-datepicker-toggle>
+              <mat-datepicker #dateOfBirth></mat-datepicker>
+              <mat-error *ngIf="f.dateOfBirth.errors?.required">Date of Birth is required</mat-error>
+            </mat-form-field>
+            <mat-form-field class="mb-3 col-md-12">
+              <input matInput placeholder="Last Name" formControlName="lastName" type="text" required>
+              <mat-error *ngIf="f.lastName.errors?.required">Last Name is required</mat-error>
+              <mat-error *ngIf="f.lastName.errors?.pattern || f.lastName.errors?.onlySpecialChar || f.lastName.errors?.fullStopValidation">Only alphabets allowed</mat-error>
+            </mat-form-field>
+            <mat-form-field class="mb-3 col-md-12">
+              <input matInput placeholder="Mother's Maiden Name" formControlName="motherMaidenName" type="text" required>
+              <mat-error *ngIf="f.motherMaidenName.errors?.required">Mother's Maiden Name is required</mat-error>
+              <mat-error *ngIf="f.motherMaidenName.errors?.pattern || f.motherMaidenName.errors?.onlySpecialChar || f.motherMaidenName.errors?.fullStopValidation">Only alphabets allowed</mat-error>
+              <mat-error *ngIf="f.motherMaidenName.errors?.minlength || f.motherMaidenName.errors?.maxlength">Mother's Maiden Name should be between 3 and 20 characters</mat-error>
+            </mat-form-field>
+            <alert></alert>
+            <div class="col-md-12 float-right">
+              <button [disabled]="loading || funameForm.invalid" class="btn btn-primary btnRegister">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Submit
+              </button>
+              </div>
+          </form>
+        <div class="col-md-12 text-center mt-3 clearfix">
+          New to tightcap.com? <a [routerLink]="['/signin/signup']" routerLinkActive="router-link-active" >Register for an account</a>
+        </div>
+      </div>
+    </div>
+
+  </div>

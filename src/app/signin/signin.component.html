@@ -1,0 +1,49 @@
+<div class="container register">
+    <div class="row">
+        <div class="col-md-3 register-left">
+            <span><img src="assets/images/Tightcap.png"></span>
+            <div class="comp-info" *ngIf="!showPwdHints && !showDobHints && !showmmnHints && !showMobHints && !showMailHints">
+                <dl>
+                
+                    <dd>Investment</dd>
+                    <dd>Omnichannel contact center</dd>
+                    <dd>Account tracking</dd>
+                    <dd>Live chat</dd>
+                    <dd>Push notifications</dd>
+                    <dd>Alerts and notifications</dd>
+                    <dd>Phone verification</dd>
+                </dl>
+            </div>
+            <div class="leftinfo-box" *ngIf="showPwdHints">
+                <h5>Password Guidelines</h5>
+                <ul>
+                    <li>Create a strong, unique password (not the one you use for your bank account or email!)</li>
+                    <li>Strong passwords are hard to guess, so avoid using "xyz123", your personal information like
+                        email, repeating characters, or sequential numbers.</li>
+                    <li>We recommend using a password manager to generate &amp; manage passwords. If password managers
+                        aren't an option, use a passphrase e.g. 0wls are such lovely creatures!</li>
+                    <li>Enable two-factor authentication to ensure strong security for your Twilio account</li>
+                </ul>
+            </div>
+            <div class="leftinfo-box" *ngIf="showDobHints">
+                Allow DOB  only in DD/MM/YYYY format
+            </div>
+            <div class="leftinfo-box" *ngIf="showmmnHints">
+                Minimum 3 characters and Max length 20
+            </div>
+            <div class="leftinfo-box" *ngIf="showMobHints">
+                11 digit if starts with 0 or 10 digit if starts with a number. 
+                While saving in the database store it in 10 digit for all mobile numbers
+            </div>
+            <div class="leftinfo-box" *ngIf="showMailHints">
+                Email Id - Please enter your email as per the below format.
+                (example format -  abc@gmail.com)
+            </div>
+
+        </div>
+        <div class="col-md-9 register-right">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+
+</div>

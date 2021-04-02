@@ -1,0 +1,120 @@
+<!-- inner Banner-->
+<div class="container home-banner">
+    <img src="assets/images/inner-banner.jpg">
+</div>
+<!--/ inner Banner end /-->
+
+<div class="container account internal-form">
+    <div class="row inner-landing">
+        <div class="col-md-12 account-right pb-4">
+            <!----/Landing page Inner section-->
+            <h4 class="title-inner" *ngIf="showLandingPage">Documents</h4>
+            <div class="row justify-content-center" *ngIf="showLandingPage">
+                <div class="col-sm-6 col-md-3 col-lg-3" (click)="showSection('settings')">
+                    <a class="accounts">
+                        <div class="card">
+                            <div class="card-body text-center"></div>
+                            <div class="card-footer">
+                                <h6 class="landing-title">Account Setting</h6>
+                                <!--<h6 class="text-center">20th Jul 19</h6>-->
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!---Box 1-->
+                <div class="col-sm-6 col-md-3 col-lg-3" (click)="showSection('family')">
+                    <a class="family">
+                        <div class="card">
+                            <div class="card-body text-center"></div>
+                            <div class="card-footer">
+                                <h6 class="landing-title">My Family</h6>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!---Box 2-->
+                <div class="col-sm-6 col-md-3 col-lg-3" (click)="showSection('nominee')">
+                    <a class="nominee">
+                        <div class="card">
+                            <div class="card-body text-center"></div>
+                            <div class="card-footer">
+                                <h6 class="landing-title">My Nominee</h6>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!---Box 3-->
+                <div class="col-sm-6 col-md-3 col-lg-3" (click)="showSection('items')">
+                    <a class="valuable-items">
+                        <div class="card">
+                            <div class="card-body text-center"></div>
+                            <div class="card-footer">
+                                <h6 class="landing-title">Valuable Items</h6>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!---Box 4-->
+                <div class="col-sm-6 col-md-3 col-lg-3">
+                    <a class="payment">
+                        <div class="card">
+                            <div class="card-body text-center"></div>
+                            <div class="card-footer">
+                                <h6 class="landing-title">Manage Payments</h6>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!---Box 5-->
+                <div class="col-sm-6 col-md-3 col-lg-3">
+                    <a class="report">
+                        <div class="card">
+                            <div class="card-body text-center"></div>
+                            <div class="card-footer">
+                                <h6 class="landing-title">Reports</h6>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!----/Landing page Inner section end-->
+            <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist" *ngIf="!showLandingPage" style="height: 65px;">
+                <li class="nav-item" style="width: 16%;height: 53px;border-bottom-width: 0px;margin-bottom: 0px;">
+                    <a [class]="active_class1" style="width: 160px;height: 65px;font-weight: 300;padding-top: 5px;padding-bottom: 0px;padding-left: 0px;padding-right: 0px;border-right-width: 0px;"
+                      id="AccountSetting-tab" (click)="showSection('settings')" data-toggle="tab" href="#AccountSetting"
+                      role="tab" aria-controls="home" [attr.aria-selected]="tabSelected=='settings'"><div class="icons icon-setting" style="height: 30px;width: 148px;"></div>
+                        <span>Setting</span></a>
+                </li>
+                <li class="nav-item" style="width: 16%;height: 53px;border-bottom-width: 0px;margin-bottom: 0px;">
+                    <a [class]="active_class2" style="width: 160px;height: 65px;font-weight: 300;padding-top: 5px;padding-bottom: 0px;padding-left: 0px;padding-right: 0px;border-right-width: 0px;"
+                     	id="family-tab" (click)="showSection('family')" data-toggle="tab" href="#family" role="tab"
+                        aria-controls="family" [attr.aria-selected]="tabSelected=='family'"><div class="icons icon-family" style="height: 30px;width: 148px;"></div><span>My Family</span></a>
+                </li>
+                <li class="nav-item" style="width: 16%;height: 53px;border-bottom-width: 0px;margin-bottom: 0px;">
+                    <a [class]="active_class3" style="width: 160px;height: 65px;font-weight: 300;padding-top: 5px;padding-bottom: 0px;padding-left: 0px;padding-right: 0px;border-right-width: 0px;"
+                     	id="nominee-tab" (click)="showSection('nominee')" data-toggle="tab" href="#nominee" role="tab"
+                        aria-controls="nominee" [attr.aria-selected]="tabSelected=='nominee'"><div class="icons icon-nominee" style="height: 30px;width: 148px;"></div><span>My Nominee</span></a>
+                </li>
+                <li class="nav-item" style="width: 16%;height: 53px;border-bottom-width: 0px;margin-bottom: 0px;">
+                    <a [class]="active_class4" style="width: 160px;height: 65px;font-weight: 300;padding-top: 5px;padding-bottom: 0px;padding-left: 0px;padding-right: 0px;border-right-width: 0px;"
+                      	id="items-tab" (click)="showSection('items')" data-toggle="tab" href="#items" role="tab"
+                        aria-controls="items" [attr.aria-selected]="tabSelected=='items'"><div class="icons icon-items" style="height: 30px;width: 148px;"></div><span>Valuable Items</span></a>
+                </li>
+                <li class="nav-item" style="width: 16%;height: 53px;border-bottom-width: 0px;margin-bottom: 0px;">
+                    <a [class]="active_class5" style="width: 160px;height: 65px;font-weight: 300;padding-top: 5px;padding-bottom: 0px;padding-left: 0px;padding-right: 0px;border-right-width: 0px;"
+                     	id="payment-tab" data-toggle="tab" href="#payment" role="tab"
+                        aria-controls="payment" [attr.aria-selected]="tabSelected=='payment'"><div class="icons icon-payments" style="height: 30px;width: 148px;"></div><span>Manage Payment</span></a>
+                </li>
+                <li class="nav-item" style="width: 20%;height: 53px;border-bottom-width: 0px;margin-bottom: 0px;">
+                    <a [class]="active_class5" style="width: 161px;height: 65px;font-weight: 300;padding-top: 5px;padding-bottom: 0px;padding-left: 0px;padding-right: 0px;border-right-width: 0px;"
+                    	id="reports-tab" data-toggle="tab" href="#reports" role="tab"
+                        aria-controls="reports" [attr.aria-selected]="tabSelected=='reports'"><div class="icons icon-report" style="height: 30px;width: 148px;"></div><span>Reports</span></a>
+                </li>
+            </ul>
+            
+            <div class="tab-content" id="myTabContent" *ngIf="!showLandingPage">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

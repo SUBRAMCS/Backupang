@@ -1,0 +1,17 @@
+#footer{
+    background-color:rgb(36, 37, 36);
+    margin-top: 0px;
+    text-align: center;
+    display: inline-block;
+}
+
+
+#container p{
+    color:white;
+     display: inline-block;
+    text-align: center; 
+}
+
+.footer-text{
+    padding: 0px;
+}

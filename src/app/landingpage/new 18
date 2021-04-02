@@ -1,0 +1,1 @@
+select nominee_member_id Family_Member_ID,nominee_member.individual_id,account_profile.Individual_ID parentIndividualId from nominee_member,account_profile where Registration_ID = (select Registration_ID from Register_User  where User_login_ID = 'mehar.vaibhav@gmail.com'

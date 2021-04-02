@@ -1,0 +1,5 @@
+{
+"personalDetail":{"title": "Mr","firstName": "Vaibhav","middleName": "","lastName": "Mehar","gender": "M","dateOfBirth": "1984-03-09"},
+"addressDetail":{"addressLine1": "Kotra Road","addressLine2": "Rajeev Nagar","addressLine3": "Raigarh","addressLine4": "","countryState": "","postCode": "496001","country":"UK"},
+"contactDetail":{"primaryEmailAddress":"mehar.vaibhav@gmail.com","primaryCountryCode": "044","primaryPhoneNumber":"7410185422","secondaryEmailAddress":"mehar.namita@gmail.com","secondaryCountryCode": "044","secondaryPhoneNumber":""}
+}

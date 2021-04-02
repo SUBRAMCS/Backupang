@@ -1,0 +1,272 @@
+<!-- Tab Accounts -->
+<div class="tab-pane fade show active" id="AccountSetting" role="tabpanel" aria-labelledby="AccountSetting-tab">
+    <div class="card mb-4">
+       
+       
+        <form [formGroup]="personalDetailsForm" (ngSubmit)="onSubmit('personalDetailsForm')">
+            {{personalDetailsForm.dirty}}
+            {{personalDetailsForm.invalid}}
+            {{personalDetailsForm.pristine}}
+            <div class="card-header">
+                <div class="account-heading">Personal Details</div>
+                <div class="button-wrap">
+                    <button type="button" class="btn btn-secondary btn-icon-secondary btn-edit" (click)="toggleEditState('personalDetailsForm')" *ngIf="personalDetailsForm.status === 'DISABLED'">
+                        <i class="fa fa-edit" aria-hidden="true"></i>
+                    </button>
+                    <button [disabled]="personalDetailsForm.invalid && !personalDetailsForm.dirty" type="submit" class="btn btn-secondary btn-icon-secondary btn-save" *ngIf="personalDetailsForm.status !== 'DISABLED'">
+                        <i class="fa fa-save" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-icon-secondary btn-delete" (click)="resetForm('personalDetailsForm')" *ngIf="personalDetailsForm.status !== 'DISABLED'">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="account-form">
+                    <div class="row">
+                        <mat-form-field class="mb-3 col-md-2">
+                            <mat-label>Title</mat-label>
+                            <select matNativeControl formControlName="title" >
+                                <option class="hidden" selected disabled value=" ">&nbsp;</option>
+                                <option value="Mr">Mr</option>
+                                <option value="Mrs">Mrs</option>
+                                <option value="-">-</option>
+                            </select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="row">
+                        <mat-form-field class="mb-3 col-md-4">
+                            <input matInput placeholder="First Name" formControlName="firstName" type="text" required>
+                            <mat-error *ngIf="pf.firstName.errors?.required">First Name is required</mat-error>
+                            <mat-error *ngIf="pf.firstName.errors?.pattern">Only alphabets allowed</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="mb-3 col-md-4">
+                            <input matInput placeholder="Middle Name" formControlName="middleName" type="text">
+                            <mat-error *ngIf="pf.middleName.errors?.pattern">Only alphabets allowed</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="mb-3 col-md-4">
+                            <input matInput placeholder="Last Name" formControlName="lastName" type="text" required>
+                            <mat-error *ngIf="pf.lastName.errors?.required">Last Name is required</mat-error>
+                            <mat-error *ngIf="pf.lastName.errors?.pattern">Only alphabets allowed</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="row">
+                        <mat-form-field class="mb-3 col-md-3">
+                            <mat-label>Gender</mat-label>
+                            <select matNativeControl formControlName="gender" >
+                                <option class="hidden" selected disabled value=" ">&nbsp;</option>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                                <option value="-">Other</option>
+                            </select>
+                        </mat-form-field>
+                        <mat-form-field class="mb-3 col-md-3 offset-md-1">
+                                <input matInput [matDatepicker]="dateOfBirth" placeholder="Date of Birth" formControlName="dateOfBirth">
+                                <mat-datepicker-toggle matSuffix [for]="dateOfBirth"></mat-datepicker-toggle>
+                                <mat-datepicker #dateOfBirth></mat-datepicker>
+                                <mat-error *ngIf="pf.dateOfBirth.errors?.underage">Age less than 18 years</mat-error>
+                                <mat-error *ngIf="pf.dateOfBirth.errors?.overage">Age more than 100 years</mat-error>
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+                <!--account-form-->
+                <alert [hidden]="pfStatusMsgHide"></alert>
+            </div>
+            <!--card-body-->
+        </form>
+    </div>
+    <!--card-->
+
+    <!--Address Panel-->
+    <div class="card mb-4">
+        <form [formGroup]="addressDetailsForm" (ngSubmit)="onSubmit('addressDetailsForm')">
+            <div class="card-header">
+                <div class="account-heading">Address Details</div>
+                <div class="button-wrap">
+                    <button type="button" class="btn btn-secondary btn-icon-secondary btn-edit" (click)="toggleEditState('addressDetailsForm')" *ngIf="addressDetailsForm.status === 'DISABLED'">
+                        <i class="fa fa-edit" aria-hidden="true"></i>
+                    </button>
+                    <button [disabled]="addressDetailsForm.invalid" type="submit" class="btn btn-secondary btn-icon-secondary btn-save" *ngIf="addressDetailsForm.status !== 'DISABLED'">
+                        <i class="fa fa-save" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-icon-secondary btn-delete" (click)="resetForm('addressDetailsForm')" *ngIf="addressDetailsForm.status !== 'DISABLED'">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="account-form">
+                    <div class="address-block">
+                            <div class="row post-code" *ngIf="!showAddressForm && !showPCAddressForm">
+                                <mat-form-field class="mb-3 col-md-4">
+                                    <input matInput placeholder="Post Code" formControlName="postCode" type="text" required>
+                                    <mat-error *ngIf="af.postCode.errors?.invalid">Please provide a valid post code to perform the search</mat-error>
+                                    <mat-error *ngIf="af.postCode.errors?.required">Please provide a post code</mat-error>
+                                </mat-form-field>
+                                <div class="col-me-8" >
+                                    <button type="button" class="btn btn-primary find-address mt-3" [disabled]="addressDetailsForm.status == 'DISABLED' || (af.postCode.value!==null && af.postCode.value.length===0)" (click)="fetchAddressForPostCode(af.postCode.value)">
+                                        <i class="fa fa-search" aria-hidden="true"></i> Find Address
+                                    </button>
+                                    <button type="button" class="btn btn-primary add-address mt-3" (click)="toggleAddressForm()" [disabled]="addressDetailsForm.status == 'DISABLED'">
+                                        <i class="fa fa-plus-square" aria-hidden="true"></i> Add Address Manually
+                                    </button>
+                                </div>
+                            </div>
+                            <!--row-->
+                            <div class="auto-address" *ngIf="showPCAddressForm">
+                                <mat-form-field class="row mb-3 col-md-6" >
+                                    <mat-label>Select an address</mat-label>
+                                    <select matNativeControl formControlName="selectedAddress" (change)="populateAddressForm()">
+                                        <option selected value="" disabled>Choose an address</option>
+                                        <option *ngFor="let address of addressList; let i = index" [ngValue]="address" >{{address.line_1}}{{address?.line_2 ? ','+address.line_2:''}}</option>
+                                    </select>
+                                </mat-form-field>
+                                <div class="row">
+                                    <mat-form-field class="mb-3 col-md-4">
+                                        <input matInput type="text" placeholder="Address 1" formControlName="addressLine1" required>
+                                        <mat-error *ngIf="af.addressLine1.errors?.required">Please provide an address</mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field class="mb-3 col-md-4">
+                                        <input matInput type="text" placeholder="Address 2" formControlName="addressLine2">
+                                    </mat-form-field>
+                                    <mat-form-field class="mb-3 col-md-4">
+                                        <input matInput type="text" placeholder="Address 3" formControlName="addressLine3">
+                                    </mat-form-field>
+
+                                </div>
+                                <!--row-->
+                                <div class="row">
+                                    <mat-form-field class="mb-3 col-md-4">
+                                        <input matInput type="text" placeholder="Address 4" formControlName="addressLine4">
+                                    </mat-form-field>
+                                    <mat-form-field class="mb-3 col-md-4">
+                                        <input matInput type="text" placeholder="County" formControlName="countryState">
+                                    </mat-form-field>
+                                    <mat-form-field class="mb-3 col-md-4">
+                                        <mat-label>Country</mat-label>
+                                        <select matNativeControl formControlName="country">
+                                            <option value="UK" selected >United Kingdom</option>
+                                        </select>
+                                    </mat-form-field>
+                                </div>
+                                <!--row-->
+                            </div>
+                            <!--auto-address-->
+
+                            <div class="addressBox"  *ngIf="showAddressForm">
+                                <div class="row ">
+                                    <mat-form-field class="mb-3 col-md-5">
+                                        <input matInput placeholder="Address 1" formControlName="addressLine1" type="text" required>
+                                        <mat-error *ngIf="af.addressLine1.errors?.required">Please provide an address</mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field class="mb-3 col-md-5">
+                                        <input matInput placeholder="Address 2" formControlName="addressLine2" type="text">
+                                    </mat-form-field>
+                                </div><!-- row -->
+                                <div class="row">
+                                    <mat-form-field class="mb-3 col-md-5">
+                                        <input matInput placeholder="Address 3" formControlName="addressLine3" type="text">
+                                    </mat-form-field>
+                                    <mat-form-field class="mb-3 col-md-5">
+                                        <input matInput placeholder="Address 4" formControlName="addressLine4" type="text">
+                                    </mat-form-field>
+                                </div><!-- row -->
+                                <div class="row">
+                                    <mat-form-field class="mb-3 col-md-5">
+                                        <input matInput placeholder="Post Code" formControlName="postCode" type="text" required>
+                                        <mat-error *ngIf="af.postCode.errors?.required">Please provide a post code</mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field class="mb-3 col-md-5">
+                                        <input matInput placeholder="County" formControlName="countryState" type="text">
+                                    </mat-form-field>
+                                </div><!-- row -->
+                                <div class="row">
+                                    <mat-form-field class="mb-3 col-md-5">
+                                        <mat-label>Country</mat-label>
+                                        <select matNativeControl formControlName="country">
+                                            <option value="UK" selected >United Kingdom</option>
+                                        </select>
+                                        <mat-error *ngIf="af.country.errors?.required">Country is required</mat-error>
+                                    </mat-form-field>
+                                </div><!-- row -->
+                            </div>
+                            <!--addressBox-->
+                    </div>
+                    <!--find-address-->
+
+                </div>
+                <!--account-form-->
+                <alert [hidden]="afStatusMsgHide"></alert>
+            </div>
+            <!--card-body-->
+        </form>
+    </div>
+    <!--card-->
+    <!--Address panel end-->
+
+    <!--Contact Panel-->
+    <div class="card mb-4">
+        <form [formGroup]="contactDetailsForm" (ngSubmit)="onSubmit('contactDetailsForm')">
+            <div class="card-header">
+                <div class="account-heading">Contact Details</div>
+                <div class="button-wrap">
+                    <button type="button" class="btn btn-secondary btn-icon-secondary btn-edit" (click)="toggleEditState('contactDetailsForm')" *ngIf="contactDetailsForm.status === 'DISABLED'">
+                        <i class="fa fa-edit" aria-hidden="true"></i>
+                    </button>
+                    <button [disabled]="contactDetailsForm.invalid" type="submit" class="btn btn-secondary btn-icon-secondary btn-save" *ngIf="contactDetailsForm.status !== 'DISABLED'">
+                        <i class="fa fa-save" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-icon-secondary btn-delete" (click)="resetForm('contactDetailsForm')" *ngIf="contactDetailsForm.status !== 'DISABLED'">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="account-form">
+                        <div class="row">
+                            <mat-form-field class="mb-3 col-md-5">
+                                <input matInput placeholder="Primary Email Id" formControlName="primaryEmailAddress" type="text">
+                                <mat-error *ngIf="cf.primaryEmailAddress.errors?.required">Email is required</mat-error>
+                                <mat-error *ngIf="cf.primaryEmailAddress.errors?.email">Invalid email</mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="mb-3 col-md-5 offset-md-2">
+                                <input matInput placeholder="Alternate Email Id" formControlName="secondaryEmailAddress" type="text">
+                                <mat-error *ngIf="cf.secondaryEmailAddress.errors?.email">Invalid email</mat-error>
+                            </mat-form-field>
+                        </div><!-- row -->
+                        <div class="row">
+                            <mat-form-field class="mb-3 col-md-2">
+                                <input matInput placeholder="Country Code" formControlName="primaryCountryCode" type="text">
+                                <mat-error *ngIf="cf.primaryCountryCode?.errors?.pattern">Country Code can not have alphabets</mat-error>
+                                <mat-error *ngIf="cf.primaryCountryCode?.errors?.maxlength">Please provide a valid 5-digit country code</mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="mb-3 col-md-3">
+                                <input matInput placeholder="Phone Number" formControlName="primaryPhoneNumber" type="text">
+                                <mat-error *ngIf="cf.primaryPhoneNumber?.errors?.pattern">Please provide a valid 10-digit phone number</mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="mb-3 col-md-2 offset-md-2">
+                                <input matInput placeholder="Country Code" formControlName="secondaryCountryCode" type="text">
+                                <mat-error *ngIf="cf.secondaryCountryCode?.errors?.pattern">Country Code can not have alphabets</mat-error>
+                                <mat-error *ngIf="cf.secondaryCountryCode?.errors?.maxlength">Please provide a valid 5-digit country code</mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="mb-3 col-md-3">
+                                <input matInput placeholder="Phone Number" formControlName="secondaryPhoneNumber" type="text">
+                                <mat-error *ngIf="cf.secondaryPhoneNumber?.errors?.pattern">Please provide a valid 10-digit phone number</mat-error>
+                            </mat-form-field>
+                        </div><!-- row -->
+                    </div>
+                    <!--account-form-->
+                    <alert [hidden]="cfStatusMsgHide"></alert>
+                </div>
+                <!--card-body-->
+        </form>
+    </div>
+    <!--card-->
+    <!--Contact panel end-->
+
+</div>
+<!-- Tab Accounts end -->

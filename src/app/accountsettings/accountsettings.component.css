@@ -1,0 +1,11 @@
+.card{
+    margin-bottom :30px;
+ }
+ .col-form-label {
+       font-size: 14px;
+     }
+ 
+ form label, table th {
+     font-weight: 400;
+ font-size: 16px;
+ }

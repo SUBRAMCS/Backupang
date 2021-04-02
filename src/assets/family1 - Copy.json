@@ -1,0 +1,196 @@
+{
+	"accountProfileId": 1,
+	"parentIndividualId": 1,
+	"familyMembers": [
+		{
+			"personalDetail": {
+				"individualId": 4,
+				"title": "Mrs",
+				"firstName": "Namita",
+				"middleName": "",
+				"lastName": "Mehar",
+				"gender": "F",
+				"dateOfBirth": "1996-07-17",
+				"emailAddress": null,
+				"countryCode": null,
+				"phoneNumber": null,
+				"motherMaidenName": "",
+				"relationship": "Wife",
+				"primaryFlag": null
+			},
+			"AddressDetails": {
+				"Addr": [
+					{
+						"addressId": 2,
+						"individualId": 4,
+						"address1": "Smiriti Nagar-1",
+						"address2": "Bhilai",
+						"address3": "",
+						"address4": "",
+						"countryState": "",
+						"country": "UK",
+						"postCode": "496001",
+						"recordUpdatedDate": null
+					},
+					{
+						"addressId": 3,
+						"individualId": 4,
+						"address1": "Smiriti Nagar-2",
+						"address2": "Bhilai",
+						"address3": "",
+						"address4": "",
+						"countryState": "",
+						"country": "UK",
+						"postCode": "496001",
+						"recordUpdatedDate": null
+					},
+					{
+						"addressId": 4,
+						"individualId": 4,
+						"address1": "Smiriti Nagar-3",
+						"address2": "Bhilai",
+						"address3": "",
+						"address4": "",
+						"countryState": "",
+						"country": "UK",
+						"postCode": "496001",
+						"recordUpdatedDate": null
+					}
+				]
+			},
+			"AccountDetails": {
+				"BankDetail": [
+					{
+						"BankDetailId": 1,
+			"individualId": 4,
+			"BankName": 5,
+			"AccountType": 1,
+			"AccountNumber": "0114CS031055",
+			"BranchName": "Raigarh",
+			"IFSC": "SBI000003",
+			"IsJointAcct": true, 
+			"JMember": [ "Jaishree" ],
+						"Addr": {
+							"addressId": 2,
+							"individualId": 4,
+							"address1": "Smiriti Nagar-1",
+							"address2": "Bhilai",
+							"address3": "",
+							"address4": "",
+							"countryState": "",
+							"country": "UK",
+							"postCode": "496001",
+							"recordUpdatedDate": null
+						}
+					},
+					{
+						"BankDetailId": 2,
+			"individualId": 4,
+			"BankName": 3,
+			"AccountType": 0,
+			"AccountNumber": "0114CS031056",
+			"BranchName": "Raigarh",
+			"IFSC": "SBI000004",
+			"IsJointAcct": false, 
+			"JMember": [],
+						"Addr": {
+							"addressId": 3,
+							"individualId": 4,
+							"address1": "Smiriti Nagar-1",
+							"address2": "Bhilai",
+							"address3": "",
+							"address4": "",
+							"countryState": "",
+							"country": "UK",
+							"postCode": "496001",
+							"recordUpdatedDate": null
+						}
+					},
+					{
+						"BankDetailId": 3,
+			"individualId": 4,
+			"BankName": 7,
+			"AccountType": 1,
+			"AccountNumber": "0114CS031057",
+			"BranchName": "Raigarh",
+			"IFSC": "SBI000006",
+			"IsJointAcct": true, 
+			"JMember": [ "Jaishree","Vaibhav" ],
+						"Addr": {
+							"addressId": 4,
+							"individualId": 4,
+							"address1": "Smiriti Nagar-1",
+							"address2": "Bhilai",
+							"address3": "",
+							"address4": "",
+							"countryState": "",
+							"country": "UK",
+							"postCode": "496001",
+							"recordUpdatedDate": null
+						}
+					}
+				]
+			}
+		},
+		{
+			"personalDetail": {
+				"individualId": 5,
+				"title": "Mrs",
+				"firstName": "Jaishree",
+				"middleName": "",
+				"lastName": "Mehar",
+				"gender": "F",
+				"dateOfBirth": "1996-07-17",
+				"emailAddress": null,
+				"countryCode": null,
+				"phoneNumber": null,
+				"motherMaidenName": "",
+				"relationship": "Mother",
+				"primaryFlag": null
+			},
+			"AddressDetails": {
+				"Addr": [
+					{
+						"addressId": 3,
+						"individualId": 5,
+						"address1": "Adarsh Nagar",
+						"address2": "Durg",
+						"address3": "Chattisgarh",
+						"address4": "",
+						"countryState": "",
+						"country": "UK",
+						"postCode": "496001",
+						"recordUpdatedDate": null
+					}
+				]
+			},
+			"AccountDetails": {
+				"BankDetail": [
+					{
+			"BankDetailId": 4,
+			"individualId": 5,
+			"BankName": 5,
+			"AccountType": 1,
+			"AccountNumber": "0114CS031059",
+			"BranchName": "Raigarh",
+			"IFSC": "SBI000003",
+			"IsJointAcct": true, 
+			"JMember": [ "Namita" ],
+						"Addr": {
+							"addressId": 5,
+							"individualId": 4,
+							"address1": "Smiriti Nagar-11",
+							"address2": "Bhilai",
+							"address3": "",
+							"address4": "",
+							"countryState": "",
+							"country": "UK",
+							"postCode": "496001",
+							"recordUpdatedDate": null
+						}
+					}
+				]
+			}
+		}
+	]
+}

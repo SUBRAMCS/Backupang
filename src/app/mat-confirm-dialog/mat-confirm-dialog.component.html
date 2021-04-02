@@ -1,0 +1,157 @@
+<div class="card" *ngIf="data.name=='FamilyMember'">
+      <div class="card-header">Tightcap Confirmation</div>
+      <div class="card-body">
+            <p class="card-text"> <img src="assets/logo1.png" style="height: 50px;width: 80px;"> Are you sure you want
+                  to remove this item ?</p>
+      </div>
+      <div class="card-header"><button style="width: 100px" type="button" class="btn btn-outline-secondary btn-sm"
+                  [mat-dialog-close]="true">Yes</button><button style="width:100px; margin-left: 10px;" type="button"
+                  class="btn btn-outline-secondary btn-sm" [mat-dialog-close]="false">No</button></div>
+</div>
+
+<div class="card" *ngIf="data.name=='SelfEmailMsg'">
+      <div class="card-header">Tightcap Confirmation</div>
+      <div class="card-body">
+            <p class="card-text"> <img src="assets/logo1.png" style="height: 50px;width: 80px;"> 
+              You are trying to update your login id / primary email id. <br>
+			
+              If you update your Primary Email Id, then you will be automatically logged out and need to login again. <br>
+		          <br><br>
+			
+              Click Ok to proceed.
+ 
+			</p>
+      </div>
+      <div class="card-header"><button style="width: 100px" type="button" class="btn btn-outline-secondary btn-sm"
+                  [mat-dialog-close]="true">Ok</button><button style="width:100px; margin-left: 10px;" type="button"
+                  class="btn btn-outline-secondary btn-sm" [mat-dialog-close]="false">Cancel</button></div>
+</div>
+
+
+<div class="card" *ngIf="data.name=='SelfEmailMsg2'">
+  <div class="card-header">Tightcap Confirmation</div>
+  <div class="card-body">
+        <p class="card-text"> <img src="assets/logo1.png" style="height: 50px;width: 80px;"> 
+          You need to use this updated email id to login. <br>
+  
+          For security reason, you will be logged out and need to login again. <br>
+          <br><br>
+  
+          Do you want to continue ?
+          
+  </p>
+  </div>
+  <div class="card-header"><button style="width: 100px" type="button" class="btn btn-outline-secondary btn-sm"
+    [mat-dialog-close]="true">Ok</button><button style="width:100px; margin-left: 10px;" type="button"
+    class="btn btn-outline-secondary btn-sm" [mat-dialog-close]="false">Cancel</button></div>
+</div>
+
+
+
+<div class="card" *ngIf="data.name=='SelfPhoneMsg'">
+  <div class="card-header">Tightcap Confirmation</div>
+  <div class="card-body">
+        <p class="card-text"> <img src="assets/logo1.png" style="height: 50px;width: 80px;"> 
+          You are trying to update your primary mobile number. <br>
+  
+          If you update your mobile number, then you will be automatically logged out and need to login again. <br>
+          <br><br>
+  
+          Click Ok to proceed.
+  </p>
+  </div>
+  <div class="card-header"><button style="width: 100px" type="button" class="btn btn-outline-secondary btn-sm"
+              [mat-dialog-close]="true">Ok</button><button style="width:100px; margin-left: 10px;" type="button"
+              class="btn btn-outline-secondary btn-sm" [mat-dialog-close]="false">Cancel</button></div>
+</div>
+
+
+<div class="card" *ngIf="data.name=='SelfPhoneMsg2'">
+<div class="card-header">Tightcap Confirmation</div>
+<div class="card-body">
+    <p class="card-text"> <img src="assets/logo1.png" style="height: 50px;width: 80px;"> 
+      OTP will be sent to this mobile number. <br>
+
+      For security reason, you will be logged out and need to login again. <br>
+      <br><br>
+
+      Do you want to continue ?
+</p>
+</div>
+<div class="card-header"><button style="width: 100px" type="button" class="btn btn-outline-secondary btn-sm"
+  [mat-dialog-close]="true">Ok</button><button style="width:100px; margin-left: 10px;" type="button"
+  class="btn btn-outline-secondary btn-sm" [mat-dialog-close]="false">Cancel</button></div>
+</div>
+
+<div class="card" *ngIf="data.name=='DelAccountInfo'">
+  <div class="card-header"><b>DDLocker Confirmation</b></div>
+  <div class="card-body">
+        <p class="card-text"> <img src="assets/logo1.png" style="height: 50px;width: 80px;"> Are you sure you want
+              to remove this entry ?</p>
+  </div>
+  <div class="card-header"><button style="width: 100px" type="button" class="btn btn-outline-secondary btn-sm"
+              [mat-dialog-close]="true">Yes</button><button style="width:100px; margin-left: 10px;" type="button"
+              class="btn btn-outline-secondary btn-sm" [mat-dialog-close]="false">No</button></div>
+</div>
+
+<div class="card" *ngIf="data.name=='delDocInfo'">
+  <div class="card-header"><b>DDLocker Confirmation</b></div>
+  <div class="card-body">
+        <p class="card-text"> <img src="assets/logo1.png" style="height: 50px;width: 80px;"> Are you sure you want
+              to remove this entry ?</p>
+  </div>
+  <div class="card-header"><button style="width: 100px" type="button" class="btn btn-outline-secondary btn-sm"
+              [mat-dialog-close]="true">Yes</button><button style="width:100px; margin-left: 10px;" type="button"
+              class="btn btn-outline-secondary btn-sm" [mat-dialog-close]="false">No</button></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="card" *ngIf="data.name=='NomineeMember'">
+      <div class="card-header">Tightcap Confirmation</div>
+     
+      <div class="card-body">
+        <div class="account-form">
+      <div class="row"><img src="assets/logo1.png" style="height: 50px;width: 80px;">
+            <mat-form-field class="mb-10 col-md-10">
+                <mat-label>Select from the available member</mat-label>
+                <select matNativeControl [(ngModel)]="memberId" >
+
+                    <option *ngFor="let key of data.familyMapKeysLs"
+                        [value]="data.nomineeList[key].personalDetail.individualId">
+                        {{data.nomineeList[key].personalDetail.firstName}}
+                        {{data.nomineeList[key].personalDetail.lastName}}
+                        ({{data.nomineeList[key].personalDetail.relationship}})
+                    </option>
+                </select>
+            </mat-form-field>
+        </div>
+        </div>
+      </div>
+
+      <div class="card-header"><button style="width: 100px" type="button" class="btn btn-outline-secondary btn-sm"
+        (click)="save()"        >Add</button><button style="width:100px; margin-left: 10px;" type="button"
+         (click)="close()"         class="btn btn-outline-secondary btn-sm" >close</button></div>
+</div>

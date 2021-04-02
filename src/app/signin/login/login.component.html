@@ -1,0 +1,38 @@
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <h3 class="register-heading mt-5">Log on to your account</h3>
+    <div class="row register-form justify-content-center">
+      <div class="col-md-8">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="overflow-hidden">
+        <mat-form-field class="mb-3 col-md-12">
+          <input (click)="hideErrMsg()" matInput placeholder="Username / Email ID" formControlName="username" type="email" required>
+          <mat-error *ngIf="f.username.errors?.required">Username / Email ID is required</mat-error>
+          <mat-error *ngIf="f.username.errors?.email || f.username.errors?.pattern">Invalid email</mat-error>
+          <mat-error *ngIf="f.username.errors?.maxlength">Email id exceeded max length (75)</mat-error>
+        </mat-form-field>
+        <mat-form-field class="mb-3 col-md-12">
+          <input (click)="hideErrMsg()" matInput placeholder="Password" formControlName="password" type="password" required>
+          <mat-error *ngIf="f.password.errors?.required">Password is required</mat-error>
+        </mat-form-field>
+        <div class="form-group">
+          <div class="g-recaptcha col-md-12" #recaptcha ></div>
+          <div *ngIf="captchaError && showErrFlg" class="alert alert-danger mt-3">Recaptcha not verified.</div>
+        </div>
+        
+        <alert *ngIf="showErrFlg" class="col-md-12 float-right"></alert>
+        <div class="col-md-12 float-right">
+          <button [disabled]= "loading || loginForm.invalid"  class="btn btn-primary btnRegister">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Continue
+          </button>
+        </div>
+      </form>
+      <div class="col-md-12 text-center mt-3 clearfix">
+        Forgot <a [routerLink]="['/signin/funame']" routerLinkActive="router-link-active" >User Name</a> | Forgot <a [routerLink]="['/signin/fpwd']" routerLinkActive="router-link-active" >Password</a>
+      </div>
+      <div class="col-md-12 text-center mt-3">
+        New to tightcap.com? <a [routerLink]="['/signin/signup']" routerLinkActive="router-link-active" >Register for an account</a>
+      </div>
+    </div>
+  </div>
+</div>

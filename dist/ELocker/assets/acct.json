@@ -1,0 +1,10 @@
+{
+	 "AccountDetails": {"bankName": "9","accountType": "1","accountNumber": "0114CS031055","accountBranch": "Raigarh Branch","accountIFSCCode": "SBI000005"},
+	 "PersonalDetails": {"title": "Mr","firstName": "Vaibhav","middleName": "","lastName": "Mehar","gender": "M","dateOfBirth": "1984-03-09"},
+	 "AddressDetails": {"Addr":[{"address1": "Kotra Road1", "address2": "Rajeev Nagar", "address3": "Raigarh (C.G)", "address4": "", "postCode": "496001", "county": "", "country": "" },
+						  {"address1": "Kotra Road2", "address2": "Rajeev Nagar", "address3": "Raigarh (C.G)", "address4": "", "postCode": "496001", "county": "", "country": "" },
+	 {"address1": "Kotra Road3", "address2": "Rajeev Nagar", "address3": "Raigarh (C.G)", "address4": "", "postCode": "496001", "county": "", "country": "" }]
+	 }
+	 
+}
+

@@ -1,0 +1,7 @@
+.clearFloat {
+    clear: both !important;
+}
+
+.password {
+    width: 90% !important;
+}
